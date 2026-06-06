@@ -125,7 +125,7 @@ const presetColors = [
             <button
               id="anim-toggle"
               class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--accent)"
+              style="background-color: var(--toggle-bg, var(--border))"
               role="switch"
               aria-checked="true"
             >
@@ -279,7 +279,10 @@ const presetColors = [
       const animToggle = document.getElementById('anim-toggle') as HTMLElement | null
       const animKnob = document.getElementById('anim-knob') as HTMLElement | null
       const animations = getStoredAnimations()
-      if (animToggle) animToggle.setAttribute('aria-checked', animations.toString())
+      if (animToggle) {
+        animToggle.setAttribute('aria-checked', animations.toString())
+        animToggle.style.backgroundColor = animations ? 'var(--accent)' : 'var(--border)'
+      }
       if (animKnob) animKnob.style.transform = animations ? 'translateX(28px)' : 'translateX(0)'
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
