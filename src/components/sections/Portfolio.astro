@@ -1,0 +1,39 @@
+---
+import Container from '../common/Container.astro'
+
+const projects = [
+  { title: 'Luxe Beauty', tag: 'Интернет-магазин', color: '#e53935' },
+  { title: 'SmartBuild', tag: 'Корпоративный сайт', color: '#1565c0' },
+  { title: 'GreenLeaf', tag: 'Лендинг', color: '#2e7d32' },
+  { title: 'CloudSync', tag: 'Веб-приложение', color: '#6a1b9a' },
+  { title: 'FitStudio', tag: 'Сайт-визитка', color: '#e65100' },
+  { title: 'ArtSpace', tag: 'Портфолио', color: '#00838f' },
+]
+---
+
+<Container id="portfolio">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Наши работы</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Примеры проектов, которые мы реализовали
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {projects.map((p) => (
+      <a
+        href="#"
+        class="group block rounded-2xl overflow-hidden border transition-all duration-300 hover:-translate-y-1"
+        style="background-color: var(--bg-card); border-color: var(--border)"
+      >
+        <div class="h-40 flex items-center justify-center transition-colors" style="background-color: {p.color}20">
+          <span class="text-4xl font-black opacity-30" style="color: {p.color}">{p.title[0]}</span>
+        </div>
+        <div class="p-5">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background-color: {p.color}20; color: {p.color}">{p.tag}</span>
+          <h3 class="text-lg font-bold mt-2 group-hover:text-[var(--accent)] transition-colors" style="color: var(--text-primary)">{p.title}</h3>
+        </div>
+      </a>
+    ))}
+  </div>
+</Container>
