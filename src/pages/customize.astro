@@ -154,18 +154,59 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Экспорт темы</h2>
-          <p class="text-sm mb-4" style="color: var(--text-secondary)">
-            Скопируйте JSON с настройками и отправьте разработчику — ваш лендинг будет выглядеть именно так.
-          </p>
-          <button
-            id="export-btn"
-            class="w-full py-3.5 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
-          >
-            Скопировать настройки
-          </button>
-          <div id="export-toast" class="hidden mt-3 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">
-            Скопировано!
+          <div class="flex gap-1 mb-4">
+            <button id="export-tab-btn" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">Экспорт</button>
+            <button id="import-tab-btn" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all" style="background-color: var(--bg-secondary); color: var(--text-secondary)">Импорт</button>
+          </div>
+
+          <div id="export-panel">
+            <p class="text-sm mb-3" style="color: var(--text-secondary)">
+              Скопируйте JSON и отправьте разработчику.
+            </p>
+            <textarea
+              id="export-json"
+              rows={5}
+              class="w-full px-4 py-3 rounded-xl border text-xs font-mono outline-none resize-y mb-3 transition-colors"
+              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+              readonly
+            ></textarea>
+            <button
+              id="export-btn"
+              class="w-full py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+            >
+              Скопировать
+            </button>
+            <div id="export-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">Скопировано!</div>
+          </div>
+
+          <div id="import-panel" class="hidden">
+            <p class="text-sm mb-3" style="color: var(--text-secondary)">
+              Вставьте JSON или загрузите файл.
+            </p>
+            <textarea
+              id="import-json"
+              rows={5}
+              class="w-full px-4 py-3 rounded-xl border text-xs font-mono outline-none resize-y mb-3 transition-colors"
+              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+              placeholder='{"theme":"dark","accent":"#ff5252","font":"inter","animations":true}'
+            ></textarea>
+            <div class="flex gap-3">
+              <button
+                id="import-btn"
+                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+              >
+                Применить
+              </button>
+              <label
+                class="flex-1 py-3 text-base font-semibold rounded-xl text-center cursor-pointer border-2 transition-all duration-200"
+                style="border-color: var(--accent); color: var(--accent)"
+              >
+                Загрузить файл
+                <input type="file" id="import-file" accept=".json" class="hidden" />
+              </label>
+            </div>
+            <div id="import-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">Тема применена!</div>
+            <div id="import-error" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: #e53935">Ошибка: неверный формат JSON</div>
           </div>
         </div>
       </div>
@@ -173,7 +214,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, setTheme, setAccent, setFont, setAnimations, getAccentColor, exportTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, setTheme, setAccent, setFont, setAnimations, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -244,6 +285,9 @@ const presetColors = [
         if (picker) picker.value = color
         if (hexInput) hexInput.value = color
       }
+
+      const exportJson = document.getElementById('export-json') as HTMLTextAreaElement | null
+      if (exportJson) exportJson.value = exportTheme()
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -316,15 +360,92 @@ const presetColors = [
         setAnimations(next)
       })
 
+      const exportJson = document.getElementById('export-json') as HTMLTextAreaElement
       const exportBtn = document.getElementById('export-btn')
       const exportToast = document.getElementById('export-toast')
+
+      const importJson = document.getElementById('import-json') as HTMLTextAreaElement
+      const importBtn = document.getElementById('import-btn')
+      const importToast = document.getElementById('import-toast')
+      const importError = document.getElementById('import-error')
+      const importFile = document.getElementById('import-file') as HTMLInputElement
+
+      const exportTabBtn = document.getElementById('export-tab-btn')
+      const importTabBtn = document.getElementById('import-tab-btn')
+      const exportPanel = document.getElementById('export-panel')
+      const importPanel = document.getElementById('import-panel')
+
+      exportTabBtn?.addEventListener('click', () => {
+        exportPanel?.classList.remove('hidden')
+        importPanel?.classList.add('hidden')
+        if (exportJson) exportJson.value = exportTheme()
+        exportTabBtn.style.backgroundColor = 'var(--accent)'
+        exportTabBtn.style.color = 'var(--text-on-accent)'
+        importTabBtn && (importTabBtn.style.backgroundColor = 'var(--bg-secondary)')
+        importTabBtn && (importTabBtn.style.color = 'var(--text-secondary)')
+      })
+
+      importTabBtn?.addEventListener('click', () => {
+        exportPanel?.classList.add('hidden')
+        importPanel?.classList.remove('hidden')
+        importTabBtn.style.backgroundColor = 'var(--accent)'
+        importTabBtn.style.color = 'var(--text-on-accent)'
+        exportTabBtn && (exportTabBtn.style.backgroundColor = 'var(--bg-secondary)')
+        exportTabBtn && (exportTabBtn.style.color = 'var(--text-secondary)')
+      })
+
       exportBtn?.addEventListener('click', () => {
-        const json = exportTheme()
-        navigator.clipboard?.writeText(json)
+        const text = exportTheme()
+        navigator.clipboard?.writeText(text).catch(() => {
+          if (exportJson) {
+            exportJson.select()
+            document.execCommand('copy')
+          }
+        })
         if (exportToast) {
           exportToast.classList.remove('hidden')
           setTimeout(() => exportToast.classList.add('hidden'), 3000)
         }
+      })
+
+      importBtn?.addEventListener('click', () => {
+        const text = importJson?.value.trim() ?? ''
+        const ok = importTheme(text)
+        if (ok) {
+          initTheme()
+          syncUI()
+          importError?.classList.add('hidden')
+          importToast?.classList.remove('hidden')
+          setTimeout(() => importToast?.classList.add('hidden'), 3000)
+        } else {
+          importToast?.classList.add('hidden')
+          importError?.classList.remove('hidden')
+          setTimeout(() => importError?.classList.add('hidden'), 3000)
+        }
+      })
+
+      importFile?.addEventListener('change', () => {
+        const file = importFile.files?.[0]
+        if (!file) return
+        const reader = new FileReader()
+        reader.onload = () => {
+          const text = reader.result as string
+          const ok = importTheme(text)
+          if (ok) {
+            initTheme()
+            syncUI()
+            if (importJson) importJson.value = text
+            importError?.classList.add('hidden')
+            importToast?.classList.remove('hidden')
+            setTimeout(() => importToast?.classList.add('hidden'), 3000)
+          } else {
+            importToast?.classList.add('hidden')
+            importError?.classList.remove('hidden')
+            setTimeout(() => importError?.classList.add('hidden'), 3000)
+          }
+        }
+        reader.readAsText(file)
+        importFile.value = ''
       })
     })
   </script>

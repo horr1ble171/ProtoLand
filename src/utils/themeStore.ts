@@ -126,3 +126,21 @@ export function exportTheme(): string {
   const animations = getStoredAnimations()
   return JSON.stringify({ theme, accent: color, font, animations }, null, 2)
 }
+
+export function importTheme(json: string): boolean {
+  try {
+    const data = JSON.parse(json)
+    if (!data.theme || !['light', 'dark'].includes(data.theme)) return false
+    if (!data.accent || typeof data.accent !== 'string') return false
+    const theme = data.theme as Theme
+    const accent = data.accent.startsWith('#') ? data.accent : data.accent
+    const font = data.font && ['system', 'inter', 'roboto', 'playfair'].includes(data.font) ? data.font as Font : undefined
+    const animations = typeof data.animations === 'boolean' ? data.animations : true
+
+    applyTheme(theme, accent, font)
+    setAnimations(animations)
+    return true
+  } catch {
+    return false
+  }
+}
