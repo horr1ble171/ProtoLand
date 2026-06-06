@@ -34,7 +34,7 @@ const { tabs } = Astro.props
   {
     tabs.map((tab, i) => (
       <div
-        class="tab-panel p-6 rounded-xl bg-[var(--bg-card)] border border-[var(--border)]"
+        class="tab-panel p-6 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] card-shadow"
         style="color: var(--text-secondary); display: {i === 0 ? 'block' : 'none'}"
         data-tab-panel
       >
