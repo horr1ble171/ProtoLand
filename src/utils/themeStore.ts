@@ -89,9 +89,13 @@ export function setScrollbar(enabled: boolean): void {
   setStoredValue(SCROLLBAR_KEY, enabled.toString())
   const root = document.documentElement
   if (enabled) {
-    root.setAttribute('data-custom-scrollbar', '')
+    root.style.setProperty('--scrollbar-w', '8px')
+    root.style.setProperty('--scrollbar-thumb', 'var(--accent)')
+    root.style.setProperty('--scrollbar-thumb-hover', 'var(--accent)')
   } else {
-    root.removeAttribute('data-custom-scrollbar')
+    root.style.setProperty('--scrollbar-w', '0px')
+    root.style.setProperty('--scrollbar-thumb', 'transparent')
+    root.style.setProperty('--scrollbar-thumb-hover', 'transparent')
   }
 }
 

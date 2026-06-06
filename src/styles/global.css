@@ -40,18 +40,18 @@ body {
   --shadow-hover: none !important;
 }
 
-:root[data-custom-scrollbar]::-webkit-scrollbar {
-  width: 8px;
+::-webkit-scrollbar {
+  width: var(--scrollbar-w, 0px);
 }
-:root[data-custom-scrollbar]::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: var(--bg-secondary);
 }
-:root[data-custom-scrollbar]::-webkit-scrollbar-thumb {
-  background: var(--accent);
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, transparent);
   border-radius: 4px;
 }
-:root[data-custom-scrollbar]::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-hover);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover, transparent);
 }
 
 .card-shadow {
