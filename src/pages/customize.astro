@@ -1,0 +1,224 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Icon from '../components/UI/Icon.astro'
+
+const presetColors = [
+  { value: 'red', label: 'Красный', light: '#e53935', dark: '#ff5252' },
+  { value: 'green', label: 'Зелёный', light: '#2e7d32', dark: '#4caf50' },
+  { value: 'blue', label: 'Синий', light: '#1565c0', dark: '#42a5f5' },
+]
+---
+
+<BaseLayout title="ProtoLand — Настройка лендинга" description="Настройте внешний вид лендинга: выберите тему и акцентный цвет.">
+  <div class="min-h-screen" style="background-color: var(--bg-primary); color: var(--text-primary)">
+    <div class="max-w-2xl mx-auto px-4 py-12">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-colors hover:text-[var(--accent)]"
+        style="color: var(--text-secondary)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        На главную
+      </a>
+
+      <h1 class="text-3xl md:text-4xl font-bold mb-2">Настройка лендинга</h1>
+      <p class="text-base mb-10" style="color: var(--text-secondary)">
+        Выберите цветовую схему и акцентный цвет — изменения сразу применяются и сохраняются.
+      </p>
+
+      <div class="space-y-8" id="customize-app">
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Тема оформления</h2>
+          <div class="flex gap-3">
+            <button
+              class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200"
+              data-theme-value="light"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              Светлая
+            </button>
+            <button
+              class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200"
+              data-theme-value="dark"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+              Тёмная
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Акцентный цвет</h2>
+
+          <div class="mb-6">
+            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Быстрый выбор</p>
+            <div class="flex gap-3 flex-wrap">
+              {presetColors.map((c) => (
+                <button
+                  class="preset-btn w-10 h-10 rounded-full border-2 transition-all duration-200 hover:scale-110"
+                  data-accent-value={c.value}
+                  aria-label={c.label}
+                  style="background-color: var(--accent-color)"
+                  data-light={c.light}
+                  data-dark={c.dark}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div class="border-t pt-6" style="border-color: var(--border)">
+            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Произвольный цвет</p>
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <input
+                  type="color"
+                  id="color-picker"
+                  class="w-14 h-14 rounded-xl border-2 cursor-pointer"
+                  style="border-color: var(--border); background: none; padding: 2px"
+                  value="#e53935"
+                />
+              </div>
+              <div class="flex-1">
+                <label for="hex-input" class="text-xs font-medium block mb-1" style="color: var(--text-secondary)">HEX</label>
+                <input
+                  type="text"
+                  id="hex-input"
+                  class="w-full px-4 py-2.5 rounded-xl border font-mono text-sm outline-none transition-colors"
+                  style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+                  placeholder="#e53935"
+                  maxlength={7}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
+              Кнопка с акцентом
+            </span>
+            <span class="px-5 py-2.5 rounded-xl font-semibold text-sm border-2 transition-all" style="border-color: var(--accent); color: var(--accent)">
+              Контурная кнопка
+            </span>
+            <span class="px-5 py-2.5 rounded-xl text-sm transition-all" style="background-color: var(--bg-secondary); color: var(--text-primary)">
+              Обычный фон
+            </span>
+            <span class="px-5 py-2.5 rounded-xl text-sm transition-all" style="background-color: var(--bg-secondary); color: var(--text-secondary)">
+              Вторичный текст
+            </span>
+          </div>
+          <div class="mt-4 h-2 rounded-full transition-all" style="background-color: var(--accent)" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    import { initTheme, getStoredTheme, getStoredAccent, setTheme, setAccent, applyTheme, getAccentColor, getAccentHover, type Theme } from '../utils/themeStore'
+
+    function syncUI(): void {
+      const theme = getStoredTheme()
+      const accent = getStoredAccent()
+
+      document.querySelectorAll('.theme-btn').forEach((btn) => {
+        const val = btn.getAttribute('data-theme-value')
+        const isActive = val === theme
+        if (isActive) {
+          btn.classList.remove('border-transparent', 'opacity-60')
+          btn.classList.add('border-[var(--accent)]')
+          btn.style.backgroundColor = 'var(--accent)'
+          btn.style.color = 'var(--text-on-accent)'
+        } else {
+          btn.classList.remove('border-[var(--accent)]')
+          btn.classList.add('border-transparent', 'opacity-60')
+          btn.style.backgroundColor = 'var(--bg-secondary)'
+          btn.style.color = 'var(--text-primary)'
+        }
+      })
+
+      document.querySelectorAll('.preset-btn').forEach((btn) => {
+        const val = btn.getAttribute('data-accent-value')
+        const isActive = val === accent
+        const theme = getStoredTheme()
+        const color = btn.getAttribute(theme === 'light' ? 'data-light' : 'data-dark') || ''
+        ;(btn as HTMLElement).style.setProperty('--accent-color', color)
+        if (isActive) {
+          btn.classList.remove('border-transparent', 'opacity-60')
+          btn.classList.add('border-[var(--accent)]', 'scale-110')
+        } else {
+          btn.classList.remove('border-[var(--accent)]', 'scale-110')
+          btn.classList.add('border-transparent', 'opacity-60')
+        }
+      })
+
+      const picker = document.getElementById('color-picker') as HTMLInputElement | null
+      const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
+
+      if (accent.startsWith('#')) {
+        if (picker) picker.value = accent
+        if (hexInput) hexInput.value = accent
+      } else {
+        const color = getAccentColor(accent, getStoredTheme())
+        if (picker) picker.value = color
+        if (hexInput) hexInput.value = color
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme()
+      syncUI()
+
+      document.querySelectorAll('.theme-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-theme-value') as Theme
+          setTheme(val)
+          syncUI()
+        })
+      })
+
+      document.querySelectorAll('.preset-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-accent-value') as string
+          setAccent(val)
+          syncUI()
+        })
+      })
+
+      const picker = document.getElementById('color-picker') as HTMLInputElement | null
+      const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
+
+      picker?.addEventListener('input', () => {
+        const color = picker.value
+        if (hexInput) hexInput.value = color
+        setAccent(color)
+        syncUI()
+      })
+
+      hexInput?.addEventListener('input', () => {
+        let val = hexInput.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (/^#[0-9a-f]{6}$/i.test(val)) {
+          if (picker) picker.value = val
+          setAccent(val)
+          syncUI()
+        }
+      })
+
+      hexInput?.addEventListener('blur', () => {
+        let val = hexInput.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (/^#[0-9a-f]{6}$/i.test(val)) {
+          if (picker) picker.value = val
+          setAccent(val)
+          syncUI()
+        } else {
+          const accent = getStoredAccent()
+          const color = accent.startsWith('#') ? accent : getAccentColor(accent, getStoredTheme())
+          hexInput.value = color
+        }
+      })
+    })
+  </script>
+</BaseLayout>

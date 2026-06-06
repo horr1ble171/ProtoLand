@@ -2,72 +2,15 @@
 import Icon from '../UI/Icon.astro'
 ---
 
-<div class="flex items-center gap-2" id="theme-switcher">
-  <button
-    id="theme-toggle"
-    class="w-9 h-9 flex items-center justify-center rounded-full transition-colors duration-200 border"
-    style="background-color: var(--bg-card); border-color: var(--border)"
-    aria-label="Переключить тему"
-  >
-    <span id="moon-icon" class="flex"><Icon name="moon" size={18} /></span>
-    <span id="sun-icon" class="flex hidden"><Icon name="sun" size={18} /></span>
-  </button>
-
-  <div class="flex gap-1.5">
-    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="red" aria-label="Красный" style="background-color: #e53935" />
-    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="green" aria-label="Зелёный" style="background-color: #2e7d32" />
-    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="blue" aria-label="Синий" style="background-color: #1565c0" />
-  </div>
-</div>
-
-<script>
-  import { initTheme, toggleTheme, setAccent, getStoredTheme, getStoredAccent, type Theme, type Accent } from '../../utils/themeStore'
-
-  function syncSwitcherUI(): void {
-    const theme = getStoredTheme()
-    const accent = getStoredAccent()
-
-    const moonIcon = document.getElementById('moon-icon')
-    const sunIcon = document.getElementById('sun-icon')
-    if (moonIcon && sunIcon) {
-      if (theme === 'light') {
-        moonIcon.classList.remove('hidden')
-        sunIcon.classList.add('hidden')
-      } else {
-        moonIcon.classList.add('hidden')
-        sunIcon.classList.remove('hidden')
-      }
-    }
-
-    document.querySelectorAll('.accent-btn').forEach((btn) => {
-      const value = btn.getAttribute('data-accent')
-      const isActive = value === accent
-      if (isActive) {
-        btn.classList.remove('border-transparent', 'opacity-60', 'hover:opacity-100')
-        btn.classList.add('border-[var(--accent)]', 'scale-110')
-      } else {
-        btn.classList.remove('border-[var(--accent)]', 'scale-110')
-        btn.classList.add('border-transparent', 'opacity-60', 'hover:opacity-100')
-      }
-    })
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    initTheme()
-    syncSwitcherUI()
-
-    const toggleBtn = document.getElementById('theme-toggle')
-    toggleBtn?.addEventListener('click', () => {
-      toggleTheme()
-      syncSwitcherUI()
-    })
-
-    document.querySelectorAll('.accent-btn').forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const accent = btn.getAttribute('data-accent') as Accent
-        setAccent(accent)
-        syncSwitcherUI()
-      })
-    })
-  })
-</script>
+<a
+  href="/customize"
+  class="w-9 h-9 flex items-center justify-center rounded-full transition-all duration-200 border hover:scale-110"
+  style="background-color: var(--bg-card); border-color: var(--border); color: var(--text-secondary)"
+  aria-label="Настройки лендинга"
+  title="Настроить лендинг"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/>
+    <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+  </svg>
+</a>
