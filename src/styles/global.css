@@ -29,6 +29,12 @@ body {
 :root[data-font='roboto'] { --font-family: 'Roboto', system-ui, -apple-system, sans-serif; }
 :root[data-font='playfair'] { --font-family: 'Playfair Display', Georgia, serif; }
 
+:root[data-no-animations] .animate-fade-in,
+:root[data-no-animations] .observe-fade {
+  animation: none !important;
+  opacity: 1 !important;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

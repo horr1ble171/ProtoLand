@@ -4,6 +4,7 @@ export type Font = 'system' | 'inter' | 'roboto' | 'playfair'
 const THEME_KEY = 'protoland-theme'
 const ACCENT_KEY = 'protoland-accent'
 const FONT_KEY = 'protoland-font'
+const ANIM_KEY = 'protoland-animations'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -47,6 +48,20 @@ export function getStoredFont(): Font {
   return getStoredValue<Font>(FONT_KEY, 'system')
 }
 
+export function getStoredAnimations(): boolean {
+  return getStoredValue<boolean>(ANIM_KEY, true)
+}
+
+export function setAnimations(enabled: boolean): void {
+  setStoredValue(ANIM_KEY, enabled.toString())
+  const root = document.documentElement
+  if (enabled) {
+    root.removeAttribute('data-no-animations')
+  } else {
+    root.setAttribute('data-no-animations', '')
+  }
+}
+
 export function getAccentColor(accent: string, theme: Theme): string {
   if (accent.startsWith('#')) return accent
   return PRESET_COLORS[accent]?.[theme] ?? PRESET_COLORS.red[theme]
@@ -77,6 +92,7 @@ export function initTheme(): void {
   const accent = getStoredAccent()
   const font = getStoredFont()
   applyTheme(theme, accent, font)
+  setAnimations(getStoredAnimations())
 }
 
 export function setTheme(theme: Theme): void {
@@ -107,5 +123,6 @@ export function exportTheme(): string {
   const accent = getStoredAccent()
   const font = getStoredFont()
   const color = getAccentColor(accent, theme)
-  return JSON.stringify({ theme, accent: color, font }, null, 2)
+  const animations = getStoredAnimations()
+  return JSON.stringify({ theme, accent: color, font, animations }, null, 2)
 }

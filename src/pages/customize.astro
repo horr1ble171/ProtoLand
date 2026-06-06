@@ -116,6 +116,25 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Анимации</h2>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium" style="color: var(--text-primary)">Fade-in при скролле</p>
+              <p class="text-sm" style="color: var(--text-secondary)">Плавное появление секций при прокрутке</p>
+            </div>
+            <button
+              id="anim-toggle"
+              class="relative w-14 h-7 rounded-full transition-colors duration-200"
+              style="background-color: var(--accent)"
+              role="switch"
+              aria-checked="true"
+            >
+              <span id="anim-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
           <div class="flex flex-wrap gap-3">
             <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
@@ -154,7 +173,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, setTheme, setAccent, setFont, getAccentColor, exportTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, setTheme, setAccent, setFont, setAnimations, getAccentColor, exportTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -207,6 +226,12 @@ const presetColors = [
           btn.style.color = 'var(--text-primary)'
         }
       })
+
+      const animToggle = document.getElementById('anim-toggle') as HTMLElement | null
+      const animKnob = document.getElementById('anim-knob') as HTMLElement | null
+      const animations = getStoredAnimations()
+      if (animToggle) animToggle.setAttribute('aria-checked', animations.toString())
+      if (animKnob) animKnob.style.transform = animations ? 'translateX(28px)' : 'translateX(0)'
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
       const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
@@ -281,6 +306,14 @@ const presetColors = [
           setFont(val)
           syncUI()
         })
+      })
+
+      animToggle?.addEventListener('click', () => {
+        const current = animToggle.getAttribute('aria-checked') === 'true'
+        const next = !current
+        animToggle.setAttribute('aria-checked', next.toString())
+        if (animKnob) animKnob.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        setAnimations(next)
       })
 
       const exportBtn = document.getElementById('export-btn')
