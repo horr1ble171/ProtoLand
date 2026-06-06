@@ -173,6 +173,24 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Скругление блоков</h2>
+          <p class="text-sm mb-4" style="color: var(--text-secondary)">Степень закругления углов у карточек и панелей</p>
+          <div class="flex gap-2 mb-5 flex-wrap" id="radius-presets">
+            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="16" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Скруглённые</button>
+            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="0" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Прямые</button>
+            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="8" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Полукруглые</button>
+            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="custom" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Своё</button>
+          </div>
+          <div id="radius-custom" class="hidden">
+            <label class="flex items-center gap-3">
+              <span class="text-sm font-medium shrink-0" style="color: var(--text-secondary)">px</span>
+              <input type="range" id="radius-slider" min="0" max="32" value="16" class="flex-1 accent-[var(--accent)] cursor-pointer" />
+              <output id="radius-value" class="text-sm font-mono font-semibold min-w-[2rem] text-right" style="color: var(--accent)">16</output>
+            </label>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
           <div class="flex flex-wrap gap-3">
             <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
@@ -274,7 +292,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, setTheme, setAccent, setFont, setAnimations, setShadows, setScrollbar, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, setTheme, setAccent, setFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -354,6 +372,30 @@ const presetColors = [
         scrollbarToggle.style.backgroundColor = scrollbar ? 'var(--accent)' : 'var(--border)'
       }
       if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(28px)' : 'translateX(0)'
+
+      const radius = getStoredRadius()
+      document.querySelectorAll('.radius-btn').forEach((btn) => {
+        const val = btn.getAttribute('data-radius-value')
+        const isActive = val === radius.toString() || (val === 'custom' && ![0, 8, 16].includes(radius))
+        if (isActive) {
+          btn.classList.remove('border-transparent')
+          btn.classList.add('border-[var(--accent)]')
+          btn.style.backgroundColor = 'var(--accent)'
+          btn.style.color = 'var(--text-on-accent)'
+        } else {
+          btn.classList.remove('border-[var(--accent)]')
+          btn.classList.add('border-transparent')
+          btn.style.backgroundColor = 'var(--bg-secondary)'
+          btn.style.color = 'var(--text-primary)'
+        }
+      })
+      const radiusCustom = document.getElementById('radius-custom')
+      const radiusSlider = document.getElementById('radius-slider') as HTMLInputElement | null
+      const radiusOutput = document.getElementById('radius-value')
+      const showCustom = ![0, 8, 16].includes(radius)
+      if (radiusCustom) radiusCustom.classList.toggle('hidden', !showCustom)
+      if (radiusSlider) radiusSlider.value = radius.toString()
+      if (radiusOutput) radiusOutput.textContent = radius.toString()
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
       const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
@@ -464,6 +506,43 @@ const presetColors = [
         scrollbarToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
         if (scrollbarKnobEl) scrollbarKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setScrollbar(next)
+      })
+
+      document.querySelectorAll('.radius-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-radius-value')
+          if (val === 'custom') {
+            const custom = document.getElementById('radius-custom')
+            if (custom) custom.classList.toggle('hidden')
+            return
+          }
+          const px = parseInt(val || '16')
+          setRadius(px)
+          syncUI()
+        })
+      })
+
+      const radiusSlider = document.getElementById('radius-slider') as HTMLInputElement | null
+      const radiusOutput = document.getElementById('radius-value')
+      radiusSlider?.addEventListener('input', () => {
+        const px = parseInt(radiusSlider.value)
+        setRadius(px)
+        if (radiusOutput) radiusOutput.textContent = px.toString()
+        document.querySelectorAll('.radius-btn').forEach((b) => {
+          const isCustom = b.getAttribute('data-radius-value') === 'custom'
+          const isActive = isCustom || b.getAttribute('data-radius-value') === px.toString()
+          if (isCustom && isActive) {
+            b.classList.remove('border-transparent')
+            b.classList.add('border-[var(--accent)]')
+            b.style.backgroundColor = 'var(--accent)'
+            b.style.color = 'var(--text-on-accent)'
+          } else if (b.getAttribute('data-radius-value') !== 'custom') {
+            b.classList.remove('border-[var(--accent)]')
+            b.classList.add('border-transparent')
+            b.style.backgroundColor = 'var(--bg-secondary)'
+            b.style.color = 'var(--text-primary)'
+          }
+        })
       })
 
       const resetBtn = document.getElementById('reset-btn')

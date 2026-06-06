@@ -40,6 +40,16 @@ body {
   --shadow-hover: none !important;
 }
 
+:root {
+  --radius-card: 16px;
+  --radius-panel: 12px;
+  --radius-btn: 8px;
+}
+
+.rounded-2xl { border-radius: var(--radius-card); }
+.rounded-xl { border-radius: var(--radius-panel); }
+.rounded-lg { border-radius: var(--radius-btn); }
+
 ::-webkit-scrollbar {
   width: var(--scrollbar-w, 0px);
 }

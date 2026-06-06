@@ -7,6 +7,7 @@ const FONT_KEY = 'protoland-font'
 const ANIM_KEY = 'protoland-animations'
 const SHADOW_KEY = 'protoland-shadows'
 const SCROLLBAR_KEY = 'protoland-scrollbar'
+const RADIUS_KEY = 'protoland-radius'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -99,6 +100,18 @@ export function setScrollbar(enabled: boolean): void {
   }
 }
 
+export function getStoredRadius(): number {
+  return getStoredValue<number>(RADIUS_KEY, 16)
+}
+
+export function setRadius(px: number): void {
+  setStoredValue(RADIUS_KEY, px.toString())
+  const root = document.documentElement
+  root.style.setProperty('--radius-card', px + 'px')
+  root.style.setProperty('--radius-panel', Math.round(px * 0.75) + 'px')
+  root.style.setProperty('--radius-btn', Math.round(px * 0.5) + 'px')
+}
+
 export function getAccentColor(accent: string, theme: Theme): string {
   if (accent.startsWith('#')) return accent
   return PRESET_COLORS[accent]?.[theme] ?? PRESET_COLORS.red[theme]
@@ -132,6 +145,7 @@ export function   initTheme(): void {
   setAnimations(getStoredAnimations())
   setShadows(getStoredShadows())
   setScrollbar(getStoredScrollbar())
+  setRadius(getStoredRadius())
 }
 
 export function setTheme(theme: Theme): void {
@@ -164,6 +178,7 @@ export function resetSettings(): void {
   localStorage.removeItem(ANIM_KEY)
   localStorage.removeItem(SHADOW_KEY)
   localStorage.removeItem(SCROLLBAR_KEY)
+  localStorage.removeItem(RADIUS_KEY)
   initTheme()
 }
 
@@ -175,7 +190,8 @@ export function exportTheme(): string {
   const animations = getStoredAnimations()
   const shadows = getStoredShadows()
   const scrollbar = getStoredScrollbar()
-  return JSON.stringify({ theme, accent: color, font, animations, shadows, scrollbar }, null, 2)
+  const radius = getStoredRadius()
+  return JSON.stringify({ theme, accent: color, font, animations, shadows, scrollbar, radius }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -189,11 +205,13 @@ export function importTheme(json: string): boolean {
     const animations = typeof data.animations === 'boolean' ? data.animations : true
     const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
     const scrollbar = typeof data.scrollbar === 'boolean' ? data.scrollbar : true
+    const radius = typeof data.radius === 'number' ? data.radius : 16
 
     applyTheme(theme, accent, font)
     setAnimations(animations)
     setShadows(shadows)
     setScrollbar(scrollbar)
+    setRadius(radius)
     return true
   } catch {
     return false
