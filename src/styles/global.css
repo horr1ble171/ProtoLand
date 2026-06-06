@@ -40,6 +40,14 @@ body {
   --shadow-hover: none !important;
 }
 
+.card-shadow {
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s ease;
+}
+.card-shadow:hover {
+  box-shadow: var(--shadow-hover);
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;

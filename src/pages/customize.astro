@@ -125,7 +125,7 @@ const presetColors = [
             <button
               id="anim-toggle"
               class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--toggle-bg, var(--border))"
+              style="background-color: var(--border)"
               role="switch"
               aria-checked="true"
             >
@@ -144,7 +144,7 @@ const presetColors = [
             <button
               id="shadow-toggle"
               class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--toggle-bg, var(--border))"
+              style="background-color: var(--border)"
               role="switch"
               aria-checked="true"
             >
@@ -411,6 +411,7 @@ const presetColors = [
         const current = animToggleEl.getAttribute('aria-checked') === 'true'
         const next = !current
         animToggleEl.setAttribute('aria-checked', next.toString())
+        animToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
         if (animKnobEl) animKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setAnimations(next)
       })
@@ -421,6 +422,7 @@ const presetColors = [
         const current = shadowToggleEl.getAttribute('aria-checked') === 'true'
         const next = !current
         shadowToggleEl.setAttribute('aria-checked', next.toString())
+        shadowToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
         if (shadowKnobEl) shadowKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setShadows(next)
       })
