@@ -28,6 +28,14 @@ body {
 :root[data-font='inter'] { --font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 :root[data-font='roboto'] { --font-family: 'Roboto', system-ui, -apple-system, sans-serif; }
 :root[data-font='playfair'] { --font-family: 'Playfair Display', Georgia, serif; }
+:root[data-font='montserrat'] { --font-family: 'Montserrat', system-ui, -apple-system, sans-serif; }
+:root[data-font='open-sans'] { --font-family: 'Open Sans', system-ui, -apple-system, sans-serif; }
+:root[data-font='lato'] { --font-family: 'Lato', system-ui, -apple-system, sans-serif; }
+:root[data-font='nunito'] { --font-family: 'Nunito', system-ui, -apple-system, sans-serif; }
+:root[data-font='poppins'] { --font-family: 'Poppins', system-ui, -apple-system, sans-serif; }
+:root[data-font='raleway'] { --font-family: 'Raleway', system-ui, -apple-system, sans-serif; }
+:root[data-font='ubuntu'] { --font-family: 'Ubuntu', system-ui, -apple-system, sans-serif; }
+:root[data-font='oswald'] { --font-family: 'Oswald', system-ui, -apple-system, sans-serif; }
 
 :root[data-no-animations] .animate-fade-in,
 :root[data-no-animations] .observe-fade {
@@ -44,6 +52,11 @@ body {
   --radius-card: 16px;
   --radius-panel: 12px;
   --radius-btn: 8px;
+  --font-weight: 400;
+}
+
+body {
+  font-weight: var(--font-weight);
 }
 
 .rounded-2xl { border-radius: var(--radius-card); }

@@ -95,7 +95,9 @@ const presetColors = [
 
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Шрифт</h2>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+
+          <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Готовые шрифты</p>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
             <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="system">
               <span class="text-lg">System</span>
               <span class="text-xs opacity-60">Системный</span>
@@ -112,6 +114,70 @@ const presetColors = [
               <span class="text-lg">Playfair</span>
               <span class="text-xs opacity-60">Премиум</span>
             </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="montserrat" style="font-family: Montserrat">
+              <span class="text-lg">Montserrat</span>
+              <span class="text-xs opacity-60">Современный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="open-sans" style="font-family: 'Open Sans'">
+              <span class="text-lg">Open Sans</span>
+              <span class="text-xs opacity-60">Универсальный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="lato" style="font-family: Lato">
+              <span class="text-lg">Lato</span>
+              <span class="text-xs opacity-60">Универсальный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="nunito" style="font-family: Nunito">
+              <span class="text-lg">Nunito</span>
+              <span class="text-xs opacity-60">Мягкий</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="poppins" style="font-family: Poppins">
+              <span class="text-lg">Poppins</span>
+              <span class="text-xs opacity-60">Современный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="raleway" style="font-family: Raleway">
+              <span class="text-lg">Raleway</span>
+              <span class="text-xs opacity-60">Элегантный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="ubuntu" style="font-family: Ubuntu">
+              <span class="text-lg">Ubuntu</span>
+              <span class="text-xs opacity-60">Технический</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="oswald" style="font-family: Oswald">
+              <span class="text-lg">Oswald</span>
+              <span class="text-xs opacity-60">Акцентный</span>
+            </button>
+          </div>
+
+          <div class="border-t pt-6 mb-5" style="border-color: var(--border)">
+            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Свой шрифт из Google Fonts</p>
+            <div class="flex gap-3">
+              <input
+                type="text"
+                id="custom-font-input"
+                class="flex-1 px-4 py-2.5 rounded-xl border font-mono text-sm outline-none transition-colors"
+                style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+                placeholder="Exo 2"
+              />
+              <button
+                id="custom-font-apply"
+                class="px-5 py-2.5 text-sm font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+              >
+                Применить
+              </button>
+            </div>
+          </div>
+
+          <div class="border-t pt-6" style="border-color: var(--border)">
+            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Насыщенность (weight)</p>
+            <div class="flex flex-wrap gap-2" id="weight-presets">
+              {[300, 400, 500, 600, 700, 800, 900].map((w) => (
+                <button
+                  class="weight-btn px-4 py-2 rounded-lg text-sm font-semibold border-2 transition-all duration-200"
+                  data-weight-value={w}
+                  style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent"
+                >{w}</button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -188,25 +254,6 @@ const presetColors = [
               <output id="radius-value" class="text-sm font-mono font-semibold min-w-[2rem] text-right" style="color: var(--accent)">16</output>
             </label>
           </div>
-        </div>
-
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
-          <div class="flex flex-wrap gap-3">
-            <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
-              Кнопка с акцентом
-            </span>
-            <span class="px-5 py-2.5 rounded-xl font-semibold text-sm border-2 transition-all" style="border-color: var(--accent); color: var(--accent)">
-              Контурная кнопка
-            </span>
-            <span class="px-5 py-2.5 rounded-xl text-sm transition-all" style="background-color: var(--bg-secondary); color: var(--text-primary)">
-              Обычный фон
-            </span>
-            <span class="px-5 py-2.5 rounded-xl text-sm transition-all" style="background-color: var(--bg-secondary); color: var(--text-secondary)">
-              Вторичный текст
-            </span>
-          </div>
-          <div class="mt-4 h-2 rounded-full transition-all" style="background-color: var(--accent)" />
         </div>
 
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
@@ -292,7 +339,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, setTheme, setAccent, setFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, getStoredFontWeight, getStoredCustomFont, setTheme, setAccent, setFont, setFontWeight, setCustomFont, loadGoogleFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -372,8 +419,34 @@ const presetColors = [
         scrollbarToggle.style.backgroundColor = scrollbar ? 'var(--accent)' : 'var(--border)'
       }
       if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(28px)' : 'translateX(0)'
-
       const radius = getStoredRadius()
+
+      document.querySelectorAll('.weight-btn').forEach((btn) => {
+        const val = btn.getAttribute('data-weight-value')
+        const isActive = parseInt(val || '400') === getStoredFontWeight()
+        if (isActive) {
+          btn.classList.remove('border-transparent')
+          btn.classList.add('border-[var(--accent)]')
+          btn.style.backgroundColor = 'var(--accent)'
+          btn.style.color = 'var(--text-on-accent)'
+        } else {
+          btn.classList.remove('border-[var(--accent)]')
+          btn.classList.add('border-transparent')
+          btn.style.backgroundColor = 'var(--bg-secondary)'
+          btn.style.color = 'var(--text-primary)'
+        }
+      })
+
+      const customInput = document.getElementById('custom-font-input') as HTMLInputElement | null
+      const storedFont = getStoredFont()
+      if (customInput) {
+        if (storedFont === 'custom') {
+          customInput.value = getStoredCustomFont()
+        } else {
+          customInput.value = ''
+        }
+      }
+
       document.querySelectorAll('.radius-btn').forEach((btn) => {
         const val = btn.getAttribute('data-radius-value')
         const isActive = val === radius.toString() || (val === 'custom' && ![0, 8, 16].includes(radius))
@@ -473,6 +546,29 @@ const presetColors = [
           setFont(val)
           syncUI()
         })
+      })
+
+      document.querySelectorAll('.weight-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = parseInt(btn.getAttribute('data-weight-value') || '400')
+          setFontWeight(val)
+          syncUI()
+        })
+      })
+
+      const customFontApply = document.getElementById('custom-font-apply')
+      const customFontInput = document.getElementById('custom-font-input') as HTMLInputElement | null
+      function applyCustomFont(): void {
+        const name = customFontInput?.value.trim()
+        if (!name) return
+        setCustomFont(name)
+        loadGoogleFont(name)
+        setFont('custom' as Font)
+        syncUI()
+      }
+      customFontApply?.addEventListener('click', applyCustomFont)
+      customFontInput?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') applyCustomFont()
       })
 
       const animToggleEl = document.getElementById('anim-toggle') as HTMLElement | null

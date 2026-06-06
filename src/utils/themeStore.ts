@@ -1,9 +1,26 @@
 export type Theme = 'light' | 'dark'
-export type Font = 'system' | 'inter' | 'roboto' | 'playfair'
+export type Font = 'system' | 'inter' | 'roboto' | 'playfair' | 'montserrat' | 'open-sans' | 'lato' | 'nunito' | 'poppins' | 'raleway' | 'ubuntu' | 'oswald'
+
+const FONT_PRESETS: Record<string, { name: string; cssName: string; category: string }> = {
+  system: { name: 'System', cssName: 'system-ui, -apple-system, sans-serif', category: 'Системный' },
+  inter: { name: 'Inter', cssName: "'Inter', sans-serif", category: 'Современный' },
+  roboto: { name: 'Roboto', cssName: "'Roboto', sans-serif", category: 'Классика' },
+  playfair: { name: 'Playfair', cssName: "'Playfair Display', serif", category: 'Премиум' },
+  montserrat: { name: 'Montserrat', cssName: "'Montserrat', sans-serif", category: 'Современный' },
+  'open-sans': { name: 'Open Sans', cssName: "'Open Sans', sans-serif", category: 'Универсальный' },
+  lato: { name: 'Lato', cssName: "'Lato', sans-serif", category: 'Универсальный' },
+  nunito: { name: 'Nunito', cssName: "'Nunito', sans-serif", category: 'Мягкий' },
+  poppins: { name: 'Poppins', cssName: "'Poppins', sans-serif", category: 'Современный' },
+  raleway: { name: 'Raleway', cssName: "'Raleway', sans-serif", category: 'Элегантный' },
+  ubuntu: { name: 'Ubuntu', cssName: "'Ubuntu', sans-serif", category: 'Технический' },
+  oswald: { name: 'Oswald', cssName: "'Oswald', sans-serif", category: 'Акцентный' },
+}
 
 const THEME_KEY = 'protoland-theme'
 const ACCENT_KEY = 'protoland-accent'
 const FONT_KEY = 'protoland-font'
+const FONT_WEIGHT_KEY = 'protoland-font-weight'
+const CUSTOM_FONT_KEY = 'protoland-custom-font'
 const ANIM_KEY = 'protoland-animations'
 const SHADOW_KEY = 'protoland-shadows'
 const SCROLLBAR_KEY = 'protoland-scrollbar'
@@ -134,6 +151,15 @@ export function applyTheme(theme: Theme, accent: string, font?: Font): void {
   if (font) {
     root.setAttribute('data-font', font)
     setStoredValue(FONT_KEY, font)
+    if (font !== 'custom') {
+      const preset = FONT_PRESETS[font]
+      if (preset) root.style.setProperty('--font-family', preset.cssName)
+    } else {
+      const custom = getStoredCustomFont()
+      if (custom) root.style.setProperty('--font-family', `'${custom}', sans-serif`)
+    }
+    const weight = getStoredFontWeight()
+    root.style.setProperty('--font-weight', weight.toString())
   }
 }
 
@@ -142,6 +168,9 @@ export function   initTheme(): void {
   const accent = getStoredAccent()
   const font = getStoredFont()
   applyTheme(theme, accent, font)
+  setFontWeight(getStoredFontWeight())
+  const custom = getStoredCustomFont()
+  if (custom) loadGoogleFont(custom)
   setAnimations(getStoredAnimations())
   setShadows(getStoredShadows())
   setScrollbar(getStoredScrollbar())
@@ -158,10 +187,52 @@ export function setAccent(accent: string): void {
   applyTheme(theme, accent)
 }
 
+export function getStoredFontWeight(): number {
+  return getStoredValue<number>(FONT_WEIGHT_KEY, 400)
+}
+
+export function getStoredCustomFont(): string {
+  return getStoredValue<string>(CUSTOM_FONT_KEY, '')
+}
+
 export function setFont(font: Font): void {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   applyTheme(theme, accent, font)
+}
+
+export function setFontWeight(weight: number): void {
+  setStoredValue(FONT_WEIGHT_KEY, weight.toString())
+  document.documentElement.style.setProperty('--font-weight', weight.toString())
+}
+
+export function setCustomFont(name: string): void {
+  setStoredValue(CUSTOM_FONT_KEY, name)
+  if (name) {
+    loadGoogleFont(name)
+    document.documentElement.style.setProperty('--font-family', `'${name}', sans-serif`)
+    document.documentElement.setAttribute('data-font', 'custom')
+  }
+}
+
+export function getEffectiveFont(): string {
+  const font = getStoredFont()
+  if (font === 'custom') {
+    const custom = getStoredCustomFont()
+    return custom || 'system-ui, sans-serif'
+  }
+  return FONT_PRESETS[font]?.cssName || 'system-ui, sans-serif'
+}
+
+export function loadGoogleFont(name: string, weights?: string): void {
+  if (typeof document === 'undefined') return
+  const existing = document.querySelector(`link[href*="${name.replace(/ /g, '+')}"]`)
+  if (existing) return
+  const link = document.createElement('link')
+  link.rel = 'stylesheet'
+  const w = weights || '300;400;500;600;700;800;900'
+  link.href = `https://fonts.googleapis.com/css2?family=${name.replace(/ /g, '+')}:wght@${w}&display=swap`
+  document.head.appendChild(link)
 }
 
 export function toggleTheme(): Theme {
@@ -175,6 +246,8 @@ export function resetSettings(): void {
   localStorage.removeItem(THEME_KEY)
   localStorage.removeItem(ACCENT_KEY)
   localStorage.removeItem(FONT_KEY)
+  localStorage.removeItem(FONT_WEIGHT_KEY)
+  localStorage.removeItem(CUSTOM_FONT_KEY)
   localStorage.removeItem(ANIM_KEY)
   localStorage.removeItem(SHADOW_KEY)
   localStorage.removeItem(SCROLLBAR_KEY)
@@ -186,12 +259,14 @@ export function exportTheme(): string {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   const font = getStoredFont()
+  const fontWeight = getStoredFontWeight()
+  const customFont = getStoredCustomFont()
   const color = getAccentColor(accent, theme)
   const animations = getStoredAnimations()
   const shadows = getStoredShadows()
   const scrollbar = getStoredScrollbar()
   const radius = getStoredRadius()
-  return JSON.stringify({ theme, accent: color, font, animations, shadows, scrollbar, radius }, null, 2)
+  return JSON.stringify({ theme, accent: color, font, fontWeight, customFont, animations, shadows, scrollbar, radius }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -201,13 +276,17 @@ export function importTheme(json: string): boolean {
     if (!data.accent || typeof data.accent !== 'string') return false
     const theme = data.theme as Theme
     const accent = data.accent.startsWith('#') ? data.accent : data.accent
-    const font = data.font && ['system', 'inter', 'roboto', 'playfair'].includes(data.font) ? data.font as Font : undefined
+    const font = data.font && Object.keys(FONT_PRESETS).includes(data.font) ? data.font as Font : undefined
+    const fontWeight = typeof data.fontWeight === 'number' ? data.fontWeight : 400
+    const customFont = typeof data.customFont === 'string' ? data.customFont : ''
     const animations = typeof data.animations === 'boolean' ? data.animations : true
     const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
     const scrollbar = typeof data.scrollbar === 'boolean' ? data.scrollbar : true
     const radius = typeof data.radius === 'number' ? data.radius : 16
 
     applyTheme(theme, accent, font)
+    setFontWeight(fontWeight)
+    if (customFont) setCustomFont(customFont)
     setAnimations(animations)
     setShadows(shadows)
     setScrollbar(scrollbar)
