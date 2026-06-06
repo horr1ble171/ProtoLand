@@ -5,6 +5,7 @@ const THEME_KEY = 'protoland-theme'
 const ACCENT_KEY = 'protoland-accent'
 const FONT_KEY = 'protoland-font'
 const ANIM_KEY = 'protoland-animations'
+const SHADOW_KEY = 'protoland-shadows'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -53,6 +54,11 @@ export function getStoredAnimations(): boolean {
   return val === 'true'
 }
 
+export function getStoredShadows(): boolean {
+  const val = getStoredValue<string>(SHADOW_KEY, 'true')
+  return val === 'true'
+}
+
 export function setAnimations(enabled: boolean): void {
   setStoredValue(ANIM_KEY, enabled.toString())
   const root = document.documentElement
@@ -60,6 +66,16 @@ export function setAnimations(enabled: boolean): void {
     root.removeAttribute('data-no-animations')
   } else {
     root.setAttribute('data-no-animations', '')
+  }
+}
+
+export function setShadows(enabled: boolean): void {
+  setStoredValue(SHADOW_KEY, enabled.toString())
+  const root = document.documentElement
+  if (enabled) {
+    root.removeAttribute('data-no-shadows')
+  } else {
+    root.setAttribute('data-no-shadows', '')
   }
 }
 
@@ -88,12 +104,13 @@ export function applyTheme(theme: Theme, accent: string, font?: Font): void {
   }
 }
 
-export function initTheme(): void {
+export function   initTheme(): void {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   const font = getStoredFont()
   applyTheme(theme, accent, font)
   setAnimations(getStoredAnimations())
+  setShadows(getStoredShadows())
 }
 
 export function setTheme(theme: Theme): void {
@@ -119,13 +136,23 @@ export function toggleTheme(): Theme {
   return next
 }
 
+export function resetSettings(): void {
+  localStorage.removeItem(THEME_KEY)
+  localStorage.removeItem(ACCENT_KEY)
+  localStorage.removeItem(FONT_KEY)
+  localStorage.removeItem(ANIM_KEY)
+  localStorage.removeItem(SHADOW_KEY)
+  initTheme()
+}
+
 export function exportTheme(): string {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   const font = getStoredFont()
   const color = getAccentColor(accent, theme)
   const animations = getStoredAnimations()
-  return JSON.stringify({ theme, accent: color, font, animations }, null, 2)
+  const shadows = getStoredShadows()
+  return JSON.stringify({ theme, accent: color, font, animations, shadows }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -137,9 +164,11 @@ export function importTheme(json: string): boolean {
     const accent = data.accent.startsWith('#') ? data.accent : data.accent
     const font = data.font && ['system', 'inter', 'roboto', 'playfair'].includes(data.font) ? data.font as Font : undefined
     const animations = typeof data.animations === 'boolean' ? data.animations : true
+    const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
 
     applyTheme(theme, accent, font)
     setAnimations(animations)
+    setShadows(shadows)
     return true
   } catch {
     return false

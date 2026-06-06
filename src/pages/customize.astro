@@ -135,6 +135,25 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Тени блоков</h2>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium" style="color: var(--text-primary)">Тени карточек</p>
+              <p class="text-sm" style="color: var(--text-secondary)">Отображение теней у секций и карточек на сайте</p>
+            </div>
+            <button
+              id="shadow-toggle"
+              class="relative w-14 h-7 rounded-full transition-colors duration-200"
+              style="background-color: var(--toggle-bg, var(--border))"
+              role="switch"
+              aria-checked="true"
+            >
+              <span id="shadow-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
           <div class="flex flex-wrap gap-3">
             <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
@@ -151,6 +170,20 @@ const presetColors = [
             </span>
           </div>
           <div class="mt-4 h-2 rounded-full transition-all" style="background-color: var(--accent)" />
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Сброс настроек</h2>
+          <p class="text-sm mb-4" style="color: var(--text-secondary)">
+            Вернуть все настройки по умолчанию (светлая тема, красный акцент, системный шрифт).
+          </p>
+          <button
+            id="reset-btn"
+            class="w-full py-3 text-base font-semibold rounded-xl transition-all duration-200"
+            style="background-color: #e53935; color: #fff"
+          >
+            Сбросить всё
+          </button>
         </div>
 
         <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
@@ -222,7 +255,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, setTheme, setAccent, setFont, setAnimations, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, setTheme, setAccent, setFont, setAnimations, setShadows, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -284,6 +317,15 @@ const presetColors = [
         animToggle.style.backgroundColor = animations ? 'var(--accent)' : 'var(--border)'
       }
       if (animKnob) animKnob.style.transform = animations ? 'translateX(28px)' : 'translateX(0)'
+
+      const shadowToggle = document.getElementById('shadow-toggle') as HTMLElement | null
+      const shadowKnob = document.getElementById('shadow-knob') as HTMLElement | null
+      const shadows = getStoredShadows()
+      if (shadowToggle) {
+        shadowToggle.setAttribute('aria-checked', shadows.toString())
+        shadowToggle.style.backgroundColor = shadows ? 'var(--accent)' : 'var(--border)'
+      }
+      if (shadowKnob) shadowKnob.style.transform = shadows ? 'translateX(28px)' : 'translateX(0)'
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
       const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
@@ -371,6 +413,22 @@ const presetColors = [
         animToggleEl.setAttribute('aria-checked', next.toString())
         if (animKnobEl) animKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setAnimations(next)
+      })
+
+      const shadowToggleEl = document.getElementById('shadow-toggle') as HTMLElement | null
+      const shadowKnobEl = document.getElementById('shadow-knob') as HTMLElement | null
+      shadowToggleEl?.addEventListener('click', () => {
+        const current = shadowToggleEl.getAttribute('aria-checked') === 'true'
+        const next = !current
+        shadowToggleEl.setAttribute('aria-checked', next.toString())
+        if (shadowKnobEl) shadowKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        setShadows(next)
+      })
+
+      const resetBtn = document.getElementById('reset-btn')
+      resetBtn?.addEventListener('click', () => {
+        resetSettings()
+        syncUI()
       })
 
       const exportJson = document.getElementById('export-json') as HTMLTextAreaElement

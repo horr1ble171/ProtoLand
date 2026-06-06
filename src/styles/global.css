@@ -35,6 +35,11 @@ body {
   opacity: 1 !important;
 }
 
+:root[data-no-shadows] {
+  --shadow: none !important;
+  --shadow-hover: none !important;
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
