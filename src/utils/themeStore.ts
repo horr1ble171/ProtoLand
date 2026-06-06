@@ -28,8 +28,16 @@ const RADIUS_KEY = 'protoland-radius'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
-  green: { light: '#2e7d32', dark: '#4caf50' },
-  blue: { light: '#1565c0', dark: '#42a5f5' },
+  violet: { light: '#7c3aed', dark: '#a78bfa' },
+  indigo: { light: '#4f46e5', dark: '#818cf8' },
+  sky: { light: '#0284c7', dark: '#38bdf8' },
+  cyan: { light: '#0891b2', dark: '#22d3ee' },
+  teal: { light: '#0d9488', dark: '#2dd4bf' },
+  lime: { light: '#65a30d', dark: '#a3e635' },
+  orange: { light: '#ea580c', dark: '#fb923c' },
+  pink: { light: '#db2777', dark: '#f472b6' },
+  rose: { light: '#e11d48', dark: '#fb7185' },
+  fuchsia: { light: '#c026d3', dark: '#e879f9' },
 }
 
 function darken(hex: string, amount: number): string {
