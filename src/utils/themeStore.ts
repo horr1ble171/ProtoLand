@@ -49,7 +49,8 @@ export function getStoredFont(): Font {
 }
 
 export function getStoredAnimations(): boolean {
-  return getStoredValue<boolean>(ANIM_KEY, true)
+  const val = getStoredValue<string>(ANIM_KEY, 'true')
+  return val === 'true'
 }
 
 export function setAnimations(enabled: boolean): void {

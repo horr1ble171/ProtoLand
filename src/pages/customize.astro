@@ -170,12 +170,20 @@ const presetColors = [
               style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
               readonly
             ></textarea>
-            <button
-              id="export-btn"
-              class="w-full py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
-            >
-              Скопировать
-            </button>
+            <div class="flex gap-3">
+              <button
+                id="export-btn"
+                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+              >
+                Копировать
+              </button>
+              <button
+                id="download-btn"
+                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--accent)] border-2 border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--text-on-accent)] transition-all duration-200"
+              >
+                Скачать JSON
+              </button>
+            </div>
             <div id="export-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">Скопировано!</div>
           </div>
 
@@ -406,6 +414,18 @@ const presetColors = [
           exportToast.classList.remove('hidden')
           setTimeout(() => exportToast.classList.add('hidden'), 3000)
         }
+      })
+
+      const downloadBtn = document.getElementById('download-btn')
+      downloadBtn?.addEventListener('click', () => {
+        const text = exportTheme()
+        const blob = new Blob([text], { type: 'application/json' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'protoland-theme.json'
+        a.click()
+        URL.revokeObjectURL(url)
       })
 
       importBtn?.addEventListener('click', () => {
