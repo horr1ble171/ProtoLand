@@ -360,11 +360,13 @@ const presetColors = [
         })
       })
 
-      animToggle?.addEventListener('click', () => {
-        const current = animToggle.getAttribute('aria-checked') === 'true'
+      const animToggleEl = document.getElementById('anim-toggle') as HTMLElement | null
+      const animKnobEl = document.getElementById('anim-knob') as HTMLElement | null
+      animToggleEl?.addEventListener('click', () => {
+        const current = animToggleEl.getAttribute('aria-checked') === 'true'
         const next = !current
-        animToggle.setAttribute('aria-checked', next.toString())
-        if (animKnob) animKnob.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        animToggleEl.setAttribute('aria-checked', next.toString())
+        if (animKnobEl) animKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setAnimations(next)
       })
 
