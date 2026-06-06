@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro'
 export interface Item {
   title: string
   content: string
@@ -21,7 +22,10 @@ const { items } = Astro.props
           data-accordion-trigger
         >
           <span>{item.title}</span>
-          <span class="accordion-icon text-2xl transition-transform duration-200" data-accordion-icon>+</span>
+          <span class="flex items-center accordion-icon" data-accordion-icon>
+            <span class="plus-icon"><Icon name="plus" size={20} /></span>
+            <span class="minus-icon hidden"><Icon name="minus" size={20} /></span>
+          </span>
         </button>
         <div
           class="accordion-content px-6 pb-4 bg-[var(--bg-card)]"
@@ -55,13 +59,22 @@ const { items } = Astro.props
           el_.style.display = 'none'
         })
         accordion.querySelectorAll('[data-accordion-icon]').forEach((el) => {
-          const el_ = el as HTMLElement
-          el_.textContent = '+'
+          const plus = el.querySelector('.plus-icon') as HTMLElement
+          const minus = el.querySelector('.minus-icon') as HTMLElement
+          if (plus && minus) {
+            plus.classList.remove('hidden')
+            minus.classList.add('hidden')
+          }
         })
 
         if (!isOpen) {
           content.style.display = 'block'
-          icon.textContent = '−'
+          const plus = icon.querySelector('.plus-icon') as HTMLElement
+          const minus = icon.querySelector('.minus-icon') as HTMLElement
+          if (plus && minus) {
+            plus.classList.add('hidden')
+            minus.classList.remove('hidden')
+          }
         }
       })
     })

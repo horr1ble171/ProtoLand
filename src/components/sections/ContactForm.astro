@@ -1,5 +1,6 @@
 ---
 import Container from '../common/Container.astro'
+import Icon from '../UI/Icon.astro'
 ---
 
 <Container id="contact">
@@ -67,7 +68,10 @@ import Container from '../common/Container.astro'
     </form>
 
     <div id="form-success" class="hidden text-center p-6 rounded-xl border mt-4" style="background-color: var(--bg-card); border-color: var(--accent)">
-      <p class="text-lg font-semibold" style="color: var(--accent)}">✓ Демо-режим, заявка не отправлена</p>
+      <p class="text-lg font-semibold flex items-center justify-center gap-2" style="color: var(--accent)">
+        <Icon name="check" size={22} />
+        Демо-режим, заявка не отправлена
+      </p>
       <p class="text-sm mt-2" style="color: var(--text-secondary)">В боевой версии мы получим ваше сообщение и ответим в течение дня.</p>
     </div>
   </div>

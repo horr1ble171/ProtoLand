@@ -1,24 +1,32 @@
 ---
 import Container from '../common/Container.astro'
+import Icon from '../UI/Icon.astro'
+import type { IconName } from '../UI/Icon.astro'
 
-const features = [
+interface Feature {
+  icon: IconName
+  title: string
+  subtitle: string
+}
+
+const features: Feature[] = [
   {
-    icon: '🎨',
+    icon: 'palette',
     title: 'Гибкая настройка цветов',
     subtitle: 'Светлая и тёмная темы, три акцентных цвета — подберите сочетание, которое подходит вашему бренду.',
   },
   {
-    icon: '📱',
+    icon: 'devices',
     title: 'Адаптив под любые устройства',
     subtitle: 'Корректное отображение на всех экранах — от мобильных телефонов до широкоформатных мониторов.',
   },
   {
-    icon: '⚡',
+    icon: 'bolt',
     title: 'Скорость загрузки 100/100',
     subtitle: 'Оптимизированный код и статическая генерация обеспечивают максимальную производительность.',
   },
   {
-    icon: '🔒',
+    icon: 'lock',
     title: 'TypeScript + строгая типизация',
     subtitle: 'Надёжный и поддерживаемый код с минимальным риском ошибок при разработке.',
   },
@@ -39,7 +47,9 @@ const features = [
         <div
           class="bg-[var(--bg-card)] rounded-2xl p-6 shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 border border-[var(--border)]"
         >
-          <div class="text-4xl mb-4">{f.icon}</div>
+          <div class="mb-4" style="color: var(--accent)">
+            <Icon name={f.icon} size={36} />
+          </div>
           <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary)">{f.title}</h3>
           <p class="text-base" style="color: var(--text-secondary)">{f.subtitle}</p>
         </div>

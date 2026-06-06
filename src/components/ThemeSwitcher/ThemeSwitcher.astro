@@ -1,9 +1,5 @@
 ---
-const accentColors = [
-  { value: 'red', label: 'Красный', class: 'bg-[#e53935]' },
-  { value: 'green', label: 'Зелёный', class: 'bg-[#2e7d32]' },
-  { value: 'blue', label: 'Синий', class: 'bg-[#1565c0]' },
-]
+import Icon from '../UI/Icon.astro'
 ---
 
 <div class="flex items-center gap-2" id="theme-switcher">
@@ -13,19 +9,14 @@ const accentColors = [
     style="background-color: var(--bg-card); border-color: var(--border)"
     aria-label="Переключить тему"
   >
-    <span id="theme-icon" class="text-lg">🌙</span>
+    <span id="moon-icon" class="flex"><Icon name="moon" size={18} /></span>
+    <span id="sun-icon" class="flex hidden"><Icon name="sun" size={18} /></span>
   </button>
 
   <div class="flex gap-1.5">
-    {accentColors.map((color) => (
-      <button
-        class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110"
-        class:list={{ 'border-[var(--accent)] scale-110': false, 'border-transparent opacity-60 hover:opacity-100': true }}
-        data-accent={color.value}
-        aria-label={color.label}
-        style={`background-color: ${color.value === 'red' ? '#e53935' : color.value === 'green' ? '#2e7d32' : '#1565c0'}`}
-      />
-    ))}
+    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="red" aria-label="Красный" style="background-color: #e53935" />
+    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="green" aria-label="Зелёный" style="background-color: #2e7d32" />
+    <button class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110 border-transparent opacity-60 hover:opacity-100" data-accent="blue" aria-label="Синий" style="background-color: #1565c0" />
   </div>
 </div>
 
@@ -36,8 +27,17 @@ const accentColors = [
     const theme = getStoredTheme()
     const accent = getStoredAccent()
 
-    const icon = document.getElementById('theme-icon')
-    if (icon) icon.textContent = theme === 'light' ? '🌙' : '☀️'
+    const moonIcon = document.getElementById('moon-icon')
+    const sunIcon = document.getElementById('sun-icon')
+    if (moonIcon && sunIcon) {
+      if (theme === 'light') {
+        moonIcon.classList.remove('hidden')
+        sunIcon.classList.add('hidden')
+      } else {
+        moonIcon.classList.add('hidden')
+        sunIcon.classList.remove('hidden')
+      }
+    }
 
     document.querySelectorAll('.accent-btn').forEach((btn) => {
       const value = btn.getAttribute('data-accent')

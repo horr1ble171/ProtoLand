@@ -1,5 +1,6 @@
 ---
 import Container from '../common/Container.astro'
+import Icon from '../UI/Icon.astro'
 
 const testimonials = [
   {
@@ -34,8 +35,8 @@ const testimonials = [
         <div
           class="bg-[var(--bg-card)] rounded-2xl p-6 shadow-[var(--shadow)] border border-[var(--border)] flex flex-col"
         >
-          <div class="mb-4">
-            <span class="text-3xl" style="color: var(--accent)">"</span>
+          <div class="mb-4" style="color: var(--accent)">
+            <Icon name="quote" size={32} />
           </div>
           <p class="text-base flex-1 mb-6" style="color: var(--text-secondary)">
             {t.text}
