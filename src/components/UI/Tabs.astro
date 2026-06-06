@@ -35,7 +35,7 @@ const { tabs } = Astro.props
     tabs.map((tab, i) => (
       <div
         class="tab-panel p-6 rounded-xl bg-[var(--bg-card)] border border-[var(--border)] card-shadow"
-        style="color: var(--text-secondary); display: {i === 0 ? 'block' : 'none'}"
+        style={`color: var(--text-secondary); display: ${i === 0 ? 'block' : 'none'}`}
         data-tab-panel
       >
         {tab.content}
@@ -45,29 +45,23 @@ const { tabs } = Astro.props
 </div>
 
 <script>
+  const BASE_INACTIVE = 'tab-btn px-5 py-2.5 rounded-lg font-medium transition-all duration-200 bg-[var(--bg-card)] border border-[var(--border)]'
+  const BASE_ACTIVE = 'tab-btn px-5 py-2.5 rounded-lg font-medium transition-all duration-200 bg-[var(--accent)] text-[var(--text-on-accent)]'
+
   document.querySelectorAll('[data-tabs]').forEach((tabs) => {
     const buttons = tabs.querySelectorAll('[data-tab-btn]')
     const panels = tabs.querySelectorAll('[data-tab-panel]')
 
     buttons.forEach((btn, index) => {
       btn.addEventListener('click', () => {
-        panels.forEach((p) => {
-          const p_ = p as HTMLElement
-          p_.style.display = 'none'
-        })
+        panels.forEach((p) => { (p as HTMLElement).style.display = 'none' })
         buttons.forEach((b) => {
-          const b_ = b as HTMLElement
-          b_.className = b_.className.replace(/bg-\[var\(--accent\)\].*?text-\[var\(--text-on-accent\)\]/, '')
-          b_.className += ' bg-[var(--bg-card)] border border-[var(--border)]'
-          b_.style.color = 'var(--text-secondary)'
+          b.className = BASE_INACTIVE
+          ;(b as HTMLElement).style.color = 'var(--text-secondary)'
         })
-
-        const panel = panels[index] as HTMLElement
-        panel.style.display = 'block'
-        const btn_ = buttons[index] as HTMLElement
-        btn_.className = btn_.className.replace(/bg-\[var\(--bg-card\)\] border border-\[var\(--border\)\]/, '')
-        btn_.className += ' bg-[var(--accent)] text-[var(--text-on-accent)]'
-        btn_.style.color = ''
+        ;(panels[index] as HTMLElement).style.display = 'block'
+        buttons[index].className = BASE_ACTIVE
+        ;(buttons[index] as HTMLElement).style.color = ''
       })
     })
   })
