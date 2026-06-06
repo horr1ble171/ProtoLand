@@ -133,12 +133,28 @@ const presetColors = [
           </div>
           <div class="mt-4 h-2 rounded-full transition-all" style="background-color: var(--accent)" />
         </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Экспорт темы</h2>
+          <p class="text-sm mb-4" style="color: var(--text-secondary)">
+            Скопируйте JSON с настройками и отправьте разработчику — ваш лендинг будет выглядеть именно так.
+          </p>
+          <button
+            id="export-btn"
+            class="w-full py-3.5 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+          >
+            Скопировать настройки
+          </button>
+          <div id="export-toast" class="hidden mt-3 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">
+            Скопировано!
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, setTheme, setAccent, setFont, getAccentColor, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, setTheme, setAccent, setFont, getAccentColor, exportTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -265,6 +281,17 @@ const presetColors = [
           setFont(val)
           syncUI()
         })
+      })
+
+      const exportBtn = document.getElementById('export-btn')
+      const exportToast = document.getElementById('export-toast')
+      exportBtn?.addEventListener('click', () => {
+        const json = exportTheme()
+        navigator.clipboard?.writeText(json)
+        if (exportToast) {
+          exportToast.classList.remove('hidden')
+          setTimeout(() => exportToast.classList.add('hidden'), 3000)
+        }
       })
     })
   </script>
