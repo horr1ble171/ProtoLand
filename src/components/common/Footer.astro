@@ -9,8 +9,11 @@ const year = new Date().getFullYear()
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-      <div class="text-sm" style="color: var(--text-secondary)">
-        &copy; {year} ProtoLand. Демо-шаблон. Все права защищены.
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt="ProtoLand" class="h-10 w-auto rounded-xl border-2" style="border-color: var(--accent)" />
+        <span class="text-sm" style="color: var(--text-secondary)">
+          &copy; {year} ProtoLand. Демо-шаблон. Все права защищены.
+        </span>
       </div>
       <div class="flex gap-4">
         <a href="#" class="text-sm transition-colors" style="color: var(--text-secondary)" on:mouseover="this.style.color='var(--accent)'" on:mouseout="this.style.color='var(--text-secondary)'">Telegram</a>
