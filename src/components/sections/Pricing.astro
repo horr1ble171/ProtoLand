@@ -1,0 +1,85 @@
+---
+import Container from '../common/Container.astro'
+
+const plans = [
+  {
+    name: 'Старт',
+    price: '15 000 ₽',
+    period: 'однократно',
+    desc: 'Идеально для запуска первого лендинга.',
+    features: ['Лендинг до 5 блоков', 'Адаптивная вёрстка', 'Форма обратной связи', 'Базовый хостинг'],
+    featured: false,
+  },
+  {
+    name: 'Оптима',
+    price: '35 000 ₽',
+    period: 'однократно',
+    desc: 'Полноценный сайт с уникальным дизайном.',
+    features: ['Лендинг до 10 блоков', 'Кастомный дизайн', 'Анимации + Intersection Observer', 'Настройка SEO', 'Интеграция с CRM'],
+    featured: true,
+  },
+  {
+    name: 'Премиум',
+    price: '70 000 ₽',
+    period: 'однократно',
+    desc: 'Сложный проект с поддержкой на месяц.',
+    features: ['Многостраничный сайт', 'Индивидуальный дизайн', 'Админ-панель', 'Поддержка 30 дней', 'Деплой + SSL'],
+    featured: false,
+  },
+]
+---
+
+<Container id="pricing">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Тарифы</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Выберите подходящий вариант для вашего проекта
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+    {plans.map((plan) => (
+      <div
+        class="rounded-2xl p-6 md:p-8 flex flex-col border-2 transition-all duration-300"
+        class:list={{
+          'border-[var(--accent)] scale-105 md:scale-110': plan.featured,
+          'border-[var(--border)] hover:border-[var(--accent)]': !plan.featured,
+        }}
+        style="background-color: var(--bg-card)"
+      >
+        {plan.featured && (
+          <span
+            class="inline-block self-start text-xs font-bold px-3 py-1 rounded-full mb-3"
+            style="background-color: var(--accent); color: var(--text-on-accent)"
+          >
+            Популярное
+          </span>
+        )}
+        <h3 class="text-2xl font-bold mb-1" style="color: var(--text-primary)">{plan.name}</h3>
+        <p class="text-sm mb-4" style="color: var(--text-secondary)">{plan.desc}</p>
+        <div class="mb-6">
+          <span class="text-3xl font-extrabold" style="color: var(--text-primary)">{plan.price}</span>
+          <span class="text-sm ml-1" style="color: var(--text-secondary)}">/{plan.period}</span>
+        </div>
+        <ul class="space-y-3 mb-8 flex-1">
+          {plan.features.map((f) => (
+            <li class="flex items-start gap-2 text-sm" style="color: var(--text-secondary)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="mt-0.5 shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+              {f}
+            </li>
+          ))}
+        </ul>
+        <a
+          href="#contact"
+          class="block w-full text-center py-3 rounded-xl font-semibold transition-all duration-200"
+          class:list={{
+            'text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)]': plan.featured,
+            'text-[var(--accent)] bg-transparent border-2 border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--text-on-accent)]': !plan.featured,
+          }}
+        >
+          Заказать
+        </a>
+      </div>
+    ))}
+  </div>
+</Container>
