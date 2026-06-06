@@ -1,7 +1,9 @@
 export type Theme = 'light' | 'dark'
+export type Font = 'system' | 'inter' | 'roboto' | 'playfair'
 
 const THEME_KEY = 'protoland-theme'
 const ACCENT_KEY = 'protoland-accent'
+const FONT_KEY = 'protoland-font'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -41,17 +43,16 @@ export function getStoredAccent(): string {
   return getStoredValue<string>(ACCENT_KEY, 'red')
 }
 
+export function getStoredFont(): Font {
+  return getStoredValue<Font>(FONT_KEY, 'system')
+}
+
 export function getAccentColor(accent: string, theme: Theme): string {
   if (accent.startsWith('#')) return accent
   return PRESET_COLORS[accent]?.[theme] ?? PRESET_COLORS.red[theme]
 }
 
-export function getAccentHover(accent: string, theme: Theme): string {
-  const color = getAccentColor(accent, theme)
-  return darken(color, theme === 'light' ? -30 : 20)
-}
-
-export function applyTheme(theme: Theme, accent: string): void {
+export function applyTheme(theme: Theme, accent: string, font?: Font): void {
   const root = document.documentElement
   root.setAttribute('data-theme', theme)
   root.setAttribute('data-accent', 'custom')
@@ -64,12 +65,18 @@ export function applyTheme(theme: Theme, accent: string): void {
 
   setStoredValue(THEME_KEY, theme)
   setStoredValue(ACCENT_KEY, accent)
+
+  if (font) {
+    root.setAttribute('data-font', font)
+    setStoredValue(FONT_KEY, font)
+  }
 }
 
 export function initTheme(): void {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
-  applyTheme(theme, accent)
+  const font = getStoredFont()
+  applyTheme(theme, accent, font)
 }
 
 export function setTheme(theme: Theme): void {
@@ -82,9 +89,23 @@ export function setAccent(accent: string): void {
   applyTheme(theme, accent)
 }
 
+export function setFont(font: Font): void {
+  const theme = getStoredTheme()
+  const accent = getStoredAccent()
+  applyTheme(theme, accent, font)
+}
+
 export function toggleTheme(): Theme {
   const current = getStoredTheme()
   const next: Theme = current === 'light' ? 'dark' : 'light'
   setTheme(next)
   return next
+}
+
+export function exportTheme(): string {
+  const theme = getStoredTheme()
+  const accent = getStoredAccent()
+  const font = getStoredFont()
+  const color = getAccentColor(accent, theme)
+  return JSON.stringify({ theme, accent: color, font }, null, 2)
 }

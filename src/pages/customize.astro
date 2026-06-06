@@ -94,6 +94,28 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Шрифт</h2>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="system">
+              <span class="text-lg">System</span>
+              <span class="text-xs opacity-60">Системный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="inter" style="font-family: Inter">
+              <span class="text-lg">Inter</span>
+              <span class="text-xs opacity-60">Современный</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="roboto" style="font-family: Roboto">
+              <span class="text-lg">Roboto</span>
+              <span class="text-xs opacity-60">Классика</span>
+            </button>
+            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="playfair" style="font-family: 'Playfair Display'">
+              <span class="text-lg">Playfair</span>
+              <span class="text-xs opacity-60">Премиум</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
           <div class="flex flex-wrap gap-3">
             <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
@@ -116,11 +138,12 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, setTheme, setAccent, applyTheme, getAccentColor, getAccentHover, type Theme } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, setTheme, setAccent, setFont, getAccentColor, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
       const accent = getStoredAccent()
+      const font = getStoredFont()
 
       document.querySelectorAll('.theme-btn').forEach((btn) => {
         const val = btn.getAttribute('data-theme-value')
@@ -150,6 +173,22 @@ const presetColors = [
         } else {
           btn.classList.remove('border-[var(--accent)]', 'scale-110')
           btn.classList.add('border-transparent', 'opacity-60')
+        }
+      })
+
+      document.querySelectorAll('.font-btn').forEach((btn) => {
+        const val = btn.getAttribute('data-font-value')
+        const isActive = val === font
+        if (isActive) {
+          btn.classList.remove('border-transparent', 'opacity-60')
+          btn.classList.add('border-[var(--accent)]')
+          btn.style.backgroundColor = 'var(--accent)'
+          btn.style.color = 'var(--text-on-accent)'
+        } else {
+          btn.classList.remove('border-[var(--accent)]')
+          btn.classList.add('border-transparent', 'opacity-60')
+          btn.style.backgroundColor = 'var(--bg-secondary)'
+          btn.style.color = 'var(--text-primary)'
         }
       })
 
@@ -218,6 +257,14 @@ const presetColors = [
           const color = accent.startsWith('#') ? accent : getAccentColor(accent, getStoredTheme())
           hexInput.value = color
         }
+      })
+
+      document.querySelectorAll('.font-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-font-value') as Font
+          setFont(val)
+          syncUI()
+        })
       })
     })
   </script>
