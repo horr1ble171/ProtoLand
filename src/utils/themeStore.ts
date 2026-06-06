@@ -6,6 +6,7 @@ const ACCENT_KEY = 'protoland-accent'
 const FONT_KEY = 'protoland-font'
 const ANIM_KEY = 'protoland-animations'
 const SHADOW_KEY = 'protoland-shadows'
+const SCROLLBAR_KEY = 'protoland-scrollbar'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -69,6 +70,11 @@ export function setAnimations(enabled: boolean): void {
   }
 }
 
+export function getStoredScrollbar(): boolean {
+  const val = getStoredValue<string>(SCROLLBAR_KEY, 'true')
+  return val === 'true'
+}
+
 export function setShadows(enabled: boolean): void {
   setStoredValue(SHADOW_KEY, enabled.toString())
   const root = document.documentElement
@@ -76,6 +82,16 @@ export function setShadows(enabled: boolean): void {
     root.removeAttribute('data-no-shadows')
   } else {
     root.setAttribute('data-no-shadows', '')
+  }
+}
+
+export function setScrollbar(enabled: boolean): void {
+  setStoredValue(SCROLLBAR_KEY, enabled.toString())
+  const root = document.documentElement
+  if (enabled) {
+    root.setAttribute('data-custom-scrollbar', '')
+  } else {
+    root.removeAttribute('data-custom-scrollbar')
   }
 }
 
@@ -111,6 +127,7 @@ export function   initTheme(): void {
   applyTheme(theme, accent, font)
   setAnimations(getStoredAnimations())
   setShadows(getStoredShadows())
+  setScrollbar(getStoredScrollbar())
 }
 
 export function setTheme(theme: Theme): void {
@@ -142,6 +159,7 @@ export function resetSettings(): void {
   localStorage.removeItem(FONT_KEY)
   localStorage.removeItem(ANIM_KEY)
   localStorage.removeItem(SHADOW_KEY)
+  localStorage.removeItem(SCROLLBAR_KEY)
   initTheme()
 }
 
@@ -152,7 +170,8 @@ export function exportTheme(): string {
   const color = getAccentColor(accent, theme)
   const animations = getStoredAnimations()
   const shadows = getStoredShadows()
-  return JSON.stringify({ theme, accent: color, font, animations, shadows }, null, 2)
+  const scrollbar = getStoredScrollbar()
+  return JSON.stringify({ theme, accent: color, font, animations, shadows, scrollbar }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -165,10 +184,12 @@ export function importTheme(json: string): boolean {
     const font = data.font && ['system', 'inter', 'roboto', 'playfair'].includes(data.font) ? data.font as Font : undefined
     const animations = typeof data.animations === 'boolean' ? data.animations : true
     const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
+    const scrollbar = typeof data.scrollbar === 'boolean' ? data.scrollbar : true
 
     applyTheme(theme, accent, font)
     setAnimations(animations)
     setShadows(shadows)
+    setScrollbar(scrollbar)
     return true
   } catch {
     return false

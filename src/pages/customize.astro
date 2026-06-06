@@ -154,6 +154,25 @@ const presetColors = [
         </div>
 
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
+          <h2 class="text-xl font-bold mb-4">Кастомный скроллбар</h2>
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="font-medium" style="color: var(--text-primary)">Стилизованный скролл</p>
+              <p class="text-sm" style="color: var(--text-secondary)">Полоса прокрутки в акцентном цвете</p>
+            </div>
+            <button
+              id="scrollbar-toggle"
+              class="relative w-14 h-7 rounded-full transition-colors duration-200"
+              style="background-color: var(--border)"
+              role="switch"
+              aria-checked="true"
+            >
+              <span id="scrollbar-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+            </button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
           <h2 class="text-xl font-bold mb-4">Предпросмотр</h2>
           <div class="flex flex-wrap gap-3">
             <span class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">
@@ -255,7 +274,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, setTheme, setAccent, setFont, setAnimations, setShadows, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, setTheme, setAccent, setFont, setAnimations, setShadows, setScrollbar, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -326,6 +345,15 @@ const presetColors = [
         shadowToggle.style.backgroundColor = shadows ? 'var(--accent)' : 'var(--border)'
       }
       if (shadowKnob) shadowKnob.style.transform = shadows ? 'translateX(28px)' : 'translateX(0)'
+
+      const scrollbarToggle = document.getElementById('scrollbar-toggle') as HTMLElement | null
+      const scrollbarKnob = document.getElementById('scrollbar-knob') as HTMLElement | null
+      const scrollbar = getStoredScrollbar()
+      if (scrollbarToggle) {
+        scrollbarToggle.setAttribute('aria-checked', scrollbar.toString())
+        scrollbarToggle.style.backgroundColor = scrollbar ? 'var(--accent)' : 'var(--border)'
+      }
+      if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(28px)' : 'translateX(0)'
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
       const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
@@ -425,6 +453,17 @@ const presetColors = [
         shadowToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
         if (shadowKnobEl) shadowKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
         setShadows(next)
+      })
+
+      const scrollbarToggleEl = document.getElementById('scrollbar-toggle') as HTMLElement | null
+      const scrollbarKnobEl = document.getElementById('scrollbar-knob') as HTMLElement | null
+      scrollbarToggleEl?.addEventListener('click', () => {
+        const current = scrollbarToggleEl.getAttribute('aria-checked') === 'true'
+        const next = !current
+        scrollbarToggleEl.setAttribute('aria-checked', next.toString())
+        scrollbarToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
+        if (scrollbarKnobEl) scrollbarKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        setScrollbar(next)
       })
 
       const resetBtn = document.getElementById('reset-btn')

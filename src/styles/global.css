@@ -40,6 +40,20 @@ body {
   --shadow-hover: none !important;
 }
 
+:root[data-custom-scrollbar]::-webkit-scrollbar {
+  width: 8px;
+}
+:root[data-custom-scrollbar]::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+:root[data-custom-scrollbar]::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+:root[data-custom-scrollbar]::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-hover);
+}
+
 .card-shadow {
   box-shadow: var(--shadow);
   transition: box-shadow 0.3s ease;
