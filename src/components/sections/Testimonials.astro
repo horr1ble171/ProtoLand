@@ -1,0 +1,51 @@
+---
+import Container from '../common/Container.astro'
+
+const testimonials = [
+  {
+    text: 'Отличный шаблон! За 5 минут я понял, как будет выглядеть мой сайт. Особенно понравилось переключение темы — сразу видно, как будет смотреться в тёмном режиме.',
+    author: 'Алексей Петров',
+    role: 'Владелец интернет-магазина',
+  },
+  {
+    text: 'Давно искал демо, где можно «потыкать» всё самому. Здесь интуитивно понятно: выбрал цвет, посмотрел секции, заполнил форму. Решил заказать сайт.',
+    author: 'Екатерина Смирнова',
+    role: 'Основатель бьюти-студии',
+  },
+  {
+    text: 'Понравилось, что все примеры на русском и адаптированы под наш рынок. Аккордеон и табы — то, что нужно. Буду рекомендовать коллегам.',
+    author: 'Дмитрий Иванов',
+    role: 'IT-директор',
+  },
+]
+---
+
+<Container id="testimonials" className="bg-[var(--bg-secondary)]">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Отзывы</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Что говорят заказчики о нашей работе
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {
+      testimonials.map((t) => (
+        <div
+          class="bg-[var(--bg-card)] rounded-2xl p-6 shadow-[var(--shadow)] border border-[var(--border)] flex flex-col"
+        >
+          <div class="mb-4">
+            <span class="text-3xl" style="color: var(--accent)">"</span>
+          </div>
+          <p class="text-base flex-1 mb-6" style="color: var(--text-secondary)">
+            {t.text}
+          </p>
+          <div>
+            <p class="font-bold" style="color: var(--text-primary)">{t.author}</p>
+            <p class="text-sm" style="color: var(--text-secondary)">{t.role}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Container>

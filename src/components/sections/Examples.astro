@@ -1,0 +1,37 @@
+---
+import Container from '../common/Container.astro'
+import Tabs from '../UI/Tabs.astro'
+import Accordion from '../UI/Accordion.astro'
+
+const tabs = [
+  { label: 'Веб-разработка', content: 'Разработка сайтов любой сложности: от лендингов до интернет-магазинов. Используем современные технологии (Astro, React, TypeScript) для создания быстрых и надёжных решений.' },
+  { label: 'Дизайн', content: 'Современный UI/UX дизайн с учётом трендов и потребностей вашей аудитории. Прототипирование, создание макетов в Figma, подготовка к вёрстке.' },
+  { label: 'Поддержка', content: 'Техническая поддержка и развитие проекта после запуска: доработки, оптимизация, обновление контента, мониторинг производительности.' },
+]
+
+const accordionItems = [
+  { title: 'Сколько времени занимает разработка?', content: 'Лендинг под ключ — от 5 до 10 рабочих дней в зависимости от сложности. Интернет-магазин или портал — от 3 недель.' },
+  { title: 'Какие технологии вы используете?', content: 'Мы работаем на Astro, React, TypeScript, TailwindCSS. Для бэкенда — Node.js или Python. Базы данных — PostgreSQL или MongoDB.' },
+  { title: 'Предоставляете ли вы хостинг?', content: 'Да, мы помогаем с деплоем на Netlify, Vercel или выделенный сервер. Также настраиваем домен и SSL-сертификат.' },
+]
+---
+
+<Container id="examples">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Примеры секций</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Демонстрация типовых компонентов, которые могут быть на вашем сайте
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div>
+      <h3 class="text-xl font-bold mb-4" style="color: var(--text-primary)">Табы</h3>
+      <Tabs tabs={tabs} />
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-4" style="color: var(--text-primary)">FAQ / Аккордеон</h3>
+      <Accordion items={accordionItems} />
+    </div>
+  </div>
+</Container>

@@ -1,0 +1,49 @@
+---
+import Container from '../common/Container.astro'
+
+const features = [
+  {
+    icon: '🎨',
+    title: 'Гибкая настройка цветов',
+    subtitle: 'Светлая и тёмная темы, три акцентных цвета — подберите сочетание, которое подходит вашему бренду.',
+  },
+  {
+    icon: '📱',
+    title: 'Адаптив под любые устройства',
+    subtitle: 'Корректное отображение на всех экранах — от мобильных телефонов до широкоформатных мониторов.',
+  },
+  {
+    icon: '⚡',
+    title: 'Скорость загрузки 100/100',
+    subtitle: 'Оптимизированный код и статическая генерация обеспечивают максимальную производительность.',
+  },
+  {
+    icon: '🔒',
+    title: 'TypeScript + строгая типизация',
+    subtitle: 'Надёжный и поддерживаемый код с минимальным риском ошибок при разработке.',
+  },
+]
+---
+
+<Container id="features">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Возможности</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Всё, что нужно для современного лендинга — из коробки
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    {
+      features.map((f) => (
+        <div
+          class="bg-[var(--bg-card)] rounded-2xl p-6 shadow-[var(--shadow)] hover:shadow-[var(--shadow-hover)] transition-all duration-300 border border-[var(--border)]"
+        >
+          <div class="text-4xl mb-4">{f.icon}</div>
+          <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary)">{f.title}</h3>
+          <p class="text-base" style="color: var(--text-secondary)">{f.subtitle}</p>
+        </div>
+      ))
+    }
+  </div>
+</Container>

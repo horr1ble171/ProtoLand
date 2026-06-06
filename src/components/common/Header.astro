@@ -1,0 +1,46 @@
+---
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher.astro'
+
+const navLinks = [
+  { href: '#features', label: 'Возможности' },
+  { href: '#how-it-works', label: 'Как это работает' },
+  { href: '#examples', label: 'Примеры' },
+  { href: '#testimonials', label: 'Отзывы' },
+  { href: '#contact', label: 'Контакты' },
+]
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-300"
+  style="background-color: var(--header-bg); border-color: var(--border)"
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <a href="#" class="text-2xl font-bold" style="color: var(--accent)">ProtoLand</a>
+
+      <nav class="hidden md:flex items-center gap-8">
+        {
+          navLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-sm font-medium transition-colors duration-200 hover:text-[var(--accent)]"
+              style="color: var(--text-secondary)"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span
+          class="hidden md:inline text-xs px-3 py-1 rounded-full border"
+          style="color: var(--text-secondary); border-color: var(--border)"
+        >
+          Демо-шаблон
+        </span>
+        <ThemeSwitcher />
+      </div>
+    </div>
+  </div>
+</header>

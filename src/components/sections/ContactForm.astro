@@ -1,0 +1,118 @@
+---
+import Container from '../common/Container.astro'
+---
+
+<Container id="contact">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Свяжитесь с нами</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Оставьте заявку, и мы обсудим ваш проект
+    </p>
+  </div>
+
+  <div class="max-w-xl mx-auto">
+    <form id="demo-form" class="space-y-5" novalidate>
+      <div>
+        <label for="name" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Имя</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Введите ваше имя"
+          required
+          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none"
+          style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
+          on:focus="this.style.borderColor='var(--accent)'"
+          on:blur="this.style.borderColor='var(--border)'"
+        />
+        <span class="text-sm text-red-500 hidden" id="name-error">Пожалуйста, введите имя</span>
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="example@mail.ru"
+          required
+          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none"
+          style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
+          on:focus="this.style.borderColor='var(--accent)'"
+          on:blur="this.style.borderColor='var(--border)'"
+        />
+        <span class="text-sm text-red-500 hidden" id="email-error">Пожалуйста, введите корректный email</span>
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Сообщение</label>
+        <textarea
+          id="message"
+          name="message"
+          rows={4}
+          placeholder="Расскажите о вашем проекте..."
+          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none resize-y"
+          style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
+          on:focus="this.style.borderColor='var(--accent)'"
+          on:blur="this.style.borderColor='var(--border)'"
+        ></textarea>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full py-3.5 text-lg font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+      >
+        Отправить
+      </button>
+    </form>
+
+    <div id="form-success" class="hidden text-center p-6 rounded-xl border mt-4" style="background-color: var(--bg-card); border-color: var(--accent)">
+      <p class="text-lg font-semibold" style="color: var(--accent)}">✓ Демо-режим, заявка не отправлена</p>
+      <p class="text-sm mt-2" style="color: var(--text-secondary)">В боевой версии мы получим ваше сообщение и ответим в течение дня.</p>
+    </div>
+  </div>
+</Container>
+
+<script>
+  const form = document.getElementById('demo-form') as HTMLFormElement | null
+  const nameField = document.getElementById('name') as HTMLInputElement | null
+  const emailField = document.getElementById('email') as HTMLInputElement | null
+  const nameError = document.getElementById('name-error') as HTMLElement | null
+  const emailError = document.getElementById('email-error') as HTMLElement | null
+  const successBlock = document.getElementById('form-success') as HTMLElement | null
+
+  function validateEmail(email: string): boolean {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault()
+
+    let valid = true
+
+    nameError?.classList.add('hidden')
+    emailError?.classList.add('hidden')
+
+    const nameVal = nameField?.value.trim() ?? ''
+    const emailVal = emailField?.value.trim() ?? ''
+
+    if (!nameVal) {
+      nameError?.classList.remove('hidden')
+      valid = false
+    }
+
+    if (!emailVal || !validateEmail(emailVal)) {
+      emailError?.classList.remove('hidden')
+      valid = false
+    }
+
+    if (!valid) return
+
+    form!.style.display = 'none'
+    successBlock!.classList.remove('hidden')
+
+    console.log('=== Демо-режим: данные формы ===')
+    console.log({ name: nameVal, email: emailVal, message: (document.getElementById('message') as HTMLTextAreaElement)?.value })
+    console.log('=== Заявка не отправлена (демо) ===')
+  })
+</script>

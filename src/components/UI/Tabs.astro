@@ -1,0 +1,74 @@
+---
+export interface Tab {
+  label: string
+  content: string
+}
+
+export interface Props {
+  tabs: Tab[]
+}
+
+const { tabs } = Astro.props
+---
+
+<div class="tabs" data-tabs>
+  <div class="flex flex-wrap gap-2 mb-6" role="tablist">
+    {
+      tabs.map((tab, i) => (
+        <button
+          class="tab-btn px-5 py-2.5 rounded-lg font-medium transition-all duration-200"
+          class:list={{
+            'bg-[var(--accent)] text-[var(--text-on-accent)]': i === 0,
+            'bg-[var(--bg-card)] border border-[var(--border)]': i !== 0,
+          }}
+          style={i !== 0 ? 'color: var(--text-secondary)' : ''}
+          role="tab"
+          data-tab-btn
+        >
+          {tab.label}
+        </button>
+      ))
+    }
+  </div>
+
+  {
+    tabs.map((tab, i) => (
+      <div
+        class="tab-panel p-6 rounded-xl bg-[var(--bg-card)] border border-[var(--border)]"
+        style="color: var(--text-secondary); display: {i === 0 ? 'block' : 'none'}"
+        data-tab-panel
+      >
+        {tab.content}
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll('[data-tabs]').forEach((tabs) => {
+    const buttons = tabs.querySelectorAll('[data-tab-btn]')
+    const panels = tabs.querySelectorAll('[data-tab-panel]')
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        panels.forEach((p) => {
+          const p_ = p as HTMLElement
+          p_.style.display = 'none'
+        })
+        buttons.forEach((b) => {
+          const b_ = b as HTMLElement
+          b_.className = b_.className.replace(/bg-\[var\(--accent\)\].*?text-\[var\(--text-on-accent\)\]/, '')
+          b_.className += ' bg-[var(--bg-card)] border border-[var(--border)]'
+          b_.style.color = 'var(--text-secondary)'
+        })
+
+        const panel = panels[index] as HTMLElement
+        panel.style.display = 'block'
+        const btn_ = buttons[index] as HTMLElement
+        btn_.className = btn_.className.replace(/bg-\[var\(--bg-card\)\] border border-\[var\(--border\)\]/, '')
+        btn_.className += ' bg-[var(--accent)] text-[var(--text-on-accent)]'
+        btn_.style.color = ''
+      })
+    })
+  })
+</script>

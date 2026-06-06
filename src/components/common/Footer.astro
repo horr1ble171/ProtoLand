@@ -1,0 +1,22 @@
+---
+
+const year = new Date().getFullYear()
+---
+
+<footer
+  class="border-t py-8"
+  style="background-color: var(--bg-secondary); border-color: var(--border)"
+>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="text-sm" style="color: var(--text-secondary)">
+        &copy; {year} ProtoLand. Демо-шаблон. Все права защищены.
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="text-sm transition-colors" style="color: var(--text-secondary)" on:mouseover="this.style.color='var(--accent)'" on:mouseout="this.style.color='var(--text-secondary)'">Telegram</a>
+        <a href="#" class="text-sm transition-colors" style="color: var(--text-secondary)" on:mouseover="this.style.color='var(--accent)'" on:mouseout="this.style.color='var(--text-secondary)'">WhatsApp</a>
+        <a href="#" class="text-sm transition-colors" style="color: var(--text-secondary)" on:mouseover="this.style.color='var(--accent)'" on:mouseout="this.style.color='var(--text-secondary)'">GitHub</a>
+      </div>
+    </div>
+  </div>
+</footer>

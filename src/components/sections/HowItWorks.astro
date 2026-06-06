@@ -1,0 +1,36 @@
+---
+import Container from '../common/Container.astro'
+
+const steps = [
+  { num: '1', title: 'Выберите тему', desc: 'Переключайте светлую и тёмную версию, подбирайте акцентный цвет.' },
+  { num: '2', title: 'Оцените секции', desc: 'Изучите типовые блоки: преимущества, отзывы, форму, табы и аккордеон.' },
+  { num: '3', title: 'Настройте контент', desc: 'Все тексты — примеры. Вы сможете заменить их на свои.' },
+  { num: '4', title: 'Закажите разработку', desc: 'Свяжитесь с нами, и мы превратим шаблон в готовый сайт.' },
+]
+---
+
+<Container id="how-it-works" className="bg-[var(--bg-secondary)]">
+  <div class="text-center mb-12">
+    <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Как это работает</h2>
+    <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
+      Всего 4 шага от знакомства до готового проекта
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    {
+      steps.map((step) => (
+        <div class="text-center">
+          <div
+            class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold text-[var(--text-on-accent)]"
+            style="background-color: var(--accent)"
+          >
+            {step.num}
+          </div>
+          <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary)">{step.title}</h3>
+          <p class="text-sm" style="color: var(--text-secondary)">{step.desc}</p>
+        </div>
+      ))
+    }
+  </div>
+</Container>

@@ -1,0 +1,69 @@
+---
+export interface Item {
+  title: string
+  content: string
+}
+
+export interface Props {
+  items: Item[]
+}
+
+const { items } = Astro.props
+---
+
+<div class="accordion" data-accordion>
+  {
+    items.map((item, i) => (
+      <div class="accordion-item border border-[var(--border)] rounded-xl mb-3 overflow-hidden">
+        <button
+          class="accordion-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-lg bg-[var(--bg-card)] hover:bg-[var(--bg-secondary)] transition-colors"
+          style="color: var(--text-primary)"
+          data-accordion-trigger
+        >
+          <span>{item.title}</span>
+          <span class="accordion-icon text-2xl transition-transform duration-200" data-accordion-icon>+</span>
+        </button>
+        <div
+          class="accordion-content px-6 pb-4 bg-[var(--bg-card)]"
+          style="color: var(--text-secondary)"
+          data-accordion-content
+        >
+          <p>{item.content}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll('[data-accordion]').forEach((accordion) => {
+    accordion.querySelectorAll('[data-accordion-content]').forEach((el) => {
+      const el_ = el as HTMLElement
+      el_.style.display = 'none'
+    })
+
+    accordion.querySelectorAll('[data-accordion-trigger]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const item = (btn as HTMLElement).closest('.accordion-item')!
+        const content = item.querySelector('[data-accordion-content]') as HTMLElement
+        const icon = item.querySelector('[data-accordion-icon]') as HTMLElement
+
+        const isOpen = content.style.display !== 'none'
+
+        accordion.querySelectorAll('[data-accordion-content]').forEach((el) => {
+          const el_ = el as HTMLElement
+          el_.style.display = 'none'
+        })
+        accordion.querySelectorAll('[data-accordion-icon]').forEach((el) => {
+          const el_ = el as HTMLElement
+          el_.textContent = '+'
+        })
+
+        if (!isOpen) {
+          content.style.display = 'block'
+          icon.textContent = '−'
+        }
+      })
+    })
+  })
+</script>

@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Header from '../components/common/Header.astro'
+import Hero from '../components/sections/Hero.astro'
+import Features from '../components/sections/Features.astro'
+import HowItWorks from '../components/sections/HowItWorks.astro'
+import Examples from '../components/sections/Examples.astro'
+import Testimonials from '../components/sections/Testimonials.astro'
+import ContactForm from '../components/sections/ContactForm.astro'
+import Footer from '../components/common/Footer.astro'
+---
+
+<BaseLayout>
+  <Header />
+  <main>
+    <Hero />
+    <div class="observe-fade opacity-0"><Features /></div>
+    <div class="observe-fade opacity-0"><HowItWorks /></div>
+    <div class="observe-fade opacity-0"><Examples /></div>
+    <div class="observe-fade opacity-0"><Testimonials /></div>
+    <div class="observe-fade opacity-0"><ContactForm /></div>
+  </main>
+  <Footer />
+</BaseLayout>

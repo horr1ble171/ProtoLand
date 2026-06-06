@@ -1,0 +1,36 @@
+---
+export interface Props {
+  href?: string
+  variant?: 'primary' | 'outline'
+  size?: 'sm' | 'md' | 'lg'
+}
+
+const { href, variant = 'primary', size = 'md' } = Astro.props
+
+const base = 'inline-block font-semibold rounded-xl transition-all duration-200 text-center border-2 cursor-pointer'
+
+const variants = {
+  primary: 'text-[var(--text-on-accent)] bg-[var(--accent)] border-[var(--accent)] hover:bg-[var(--accent-hover)] hover:border-[var(--accent-hover)]',
+  outline: 'text-[var(--accent)] bg-transparent border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--text-on-accent)]',
+}
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+}
+
+const cls = `${base} ${variants[variant]} ${sizes[size]}`
+---
+
+{
+  href ? (
+    <a href={href} class={cls}>
+      <slot />
+    </a>
+  ) : (
+    <button class={cls}>
+      <slot />
+    </button>
+  )
+}

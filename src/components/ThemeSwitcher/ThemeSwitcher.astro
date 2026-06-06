@@ -1,0 +1,73 @@
+---
+const accentColors = [
+  { value: 'red', label: 'Красный', class: 'bg-[#e53935]' },
+  { value: 'green', label: 'Зелёный', class: 'bg-[#2e7d32]' },
+  { value: 'blue', label: 'Синий', class: 'bg-[#1565c0]' },
+]
+---
+
+<div class="flex items-center gap-2" id="theme-switcher">
+  <button
+    id="theme-toggle"
+    class="w-9 h-9 flex items-center justify-center rounded-full transition-colors duration-200 border"
+    style="background-color: var(--bg-card); border-color: var(--border)"
+    aria-label="Переключить тему"
+  >
+    <span id="theme-icon" class="text-lg">🌙</span>
+  </button>
+
+  <div class="flex gap-1.5">
+    {accentColors.map((color) => (
+      <button
+        class="accent-btn w-6 h-6 rounded-full border-2 transition-all duration-200 hover:scale-110"
+        class:list={{ 'border-[var(--accent)] scale-110': false, 'border-transparent opacity-60 hover:opacity-100': true }}
+        data-accent={color.value}
+        aria-label={color.label}
+        style={`background-color: ${color.value === 'red' ? '#e53935' : color.value === 'green' ? '#2e7d32' : '#1565c0'}`}
+      />
+    ))}
+  </div>
+</div>
+
+<script>
+  import { initTheme, toggleTheme, setAccent, getStoredTheme, getStoredAccent, type Theme, type Accent } from '../../utils/themeStore'
+
+  function syncSwitcherUI(): void {
+    const theme = getStoredTheme()
+    const accent = getStoredAccent()
+
+    const icon = document.getElementById('theme-icon')
+    if (icon) icon.textContent = theme === 'light' ? '🌙' : '☀️'
+
+    document.querySelectorAll('.accent-btn').forEach((btn) => {
+      const value = btn.getAttribute('data-accent')
+      const isActive = value === accent
+      if (isActive) {
+        btn.classList.remove('border-transparent', 'opacity-60', 'hover:opacity-100')
+        btn.classList.add('border-[var(--accent)]', 'scale-110')
+      } else {
+        btn.classList.remove('border-[var(--accent)]', 'scale-110')
+        btn.classList.add('border-transparent', 'opacity-60', 'hover:opacity-100')
+      }
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initTheme()
+    syncSwitcherUI()
+
+    const toggleBtn = document.getElementById('theme-toggle')
+    toggleBtn?.addEventListener('click', () => {
+      toggleTheme()
+      syncSwitcherUI()
+    })
+
+    document.querySelectorAll('.accent-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const accent = btn.getAttribute('data-accent') as Accent
+        setAccent(accent)
+        syncSwitcherUI()
+      })
+    })
+  })
+</script>
