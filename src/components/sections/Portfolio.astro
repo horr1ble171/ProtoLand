@@ -11,7 +11,7 @@ const projects = [
 ]
 ---
 
-<Container id="portfolio">
+<Container id="portfolio" className="section-gradient-reverse">
   <div class="text-center mb-12">
     <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Наши работы</h2>
     <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
@@ -19,18 +19,18 @@ const projects = [
     </p>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 fade-stagger">
     {projects.map((p) => (
       <a
         href="#"
-        class="group block rounded-2xl overflow-hidden border card-shadow transition-all duration-300 hover:-translate-y-1"
+        class="group block rounded-2xl overflow-hidden border card-shadow transition-all duration-300 hover:-translate-y-2"
         style="background-color: var(--bg-card); border-color: var(--border)"
       >
-        <div class="h-40 flex items-center justify-center transition-colors" style="background-color: {p.color}20">
-          <span class="text-4xl font-black opacity-30" style="color: {p.color}">{p.title[0]}</span>
+        <div class="h-44 flex items-center justify-center transition-all duration-300 group-hover:scale-105" style="background: linear-gradient(135deg, {p.color}20, {p.color}08)">
+          <span class="text-5xl font-black opacity-20 transition-all duration-300 group-hover:opacity-30 group-hover:scale-110" style="color: {p.color}">{p.title[0]}</span>
         </div>
         <div class="p-5">
-          <span class="text-xs font-semibold px-2.5 py-1 rounded-full" style="background-color: {p.color}20; color: {p.color}">{p.tag}</span>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full transition-colors duration-200" style="background-color: {p.color}20; color: {p.color}">{p.tag}</span>
           <h3 class="text-lg font-bold mt-2 group-hover:text-[var(--accent)] transition-colors" style="color: var(--text-primary)">{p.title}</h3>
         </div>
       </a>

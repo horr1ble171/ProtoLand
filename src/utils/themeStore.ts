@@ -5,7 +5,7 @@ const FONT_PRESETS: Record<string, { name: string; cssName: string; category: st
   system: { name: 'System', cssName: 'system-ui, -apple-system, sans-serif', category: 'Системный' },
   inter: { name: 'Inter', cssName: "'Inter', sans-serif", category: 'Современный' },
   roboto: { name: 'Roboto', cssName: "'Roboto', sans-serif", category: 'Классика' },
-  playfair: { name: 'Playfair', cssName: "'Playfair Display', serif", category: 'Премиум' },
+  playfair: { name: 'Playfair Display', cssName: "'Playfair Display', serif", category: 'Премиум' },
   montserrat: { name: 'Montserrat', cssName: "'Montserrat', sans-serif", category: 'Современный' },
   'open-sans': { name: 'Open Sans', cssName: "'Open Sans', sans-serif", category: 'Универсальный' },
   lato: { name: 'Lato', cssName: "'Lato', sans-serif", category: 'Универсальный' },
@@ -171,14 +171,18 @@ export function applyTheme(theme: Theme, accent: string, font?: Font): void {
   }
 }
 
-export function   initTheme(): void {
+export function initTheme(): void {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   const font = getStoredFont()
   applyTheme(theme, accent, font)
   setFontWeight(getStoredFontWeight())
   const custom = getStoredCustomFont()
-  if (custom) loadGoogleFont(custom)
+  if (custom) {
+    loadGoogleFont(custom)
+  } else if (font !== 'system') {
+    loadGoogleFont(FONT_PRESETS[font]?.name || font)
+  }
   setAnimations(getStoredAnimations())
   setShadows(getStoredShadows())
   setScrollbar(getStoredScrollbar())
@@ -207,6 +211,9 @@ export function setFont(font: Font): void {
   const theme = getStoredTheme()
   const accent = getStoredAccent()
   applyTheme(theme, accent, font)
+  if (font !== 'system' && font !== 'custom') {
+    loadGoogleFont(FONT_PRESETS[font]?.name || font)
+  }
 }
 
 export function setFontWeight(weight: number): void {
@@ -294,7 +301,11 @@ export function importTheme(json: string): boolean {
 
     applyTheme(theme, accent, font)
     setFontWeight(fontWeight)
-    if (customFont) setCustomFont(customFont)
+    if (customFont) {
+      setCustomFont(customFont)
+    } else if (font && font !== 'system') {
+      loadGoogleFont(FONT_PRESETS[font]?.name || font)
+    }
     setAnimations(animations)
     setShadows(shadows)
     setScrollbar(scrollbar)

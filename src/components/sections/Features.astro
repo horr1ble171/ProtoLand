@@ -41,17 +41,20 @@ const features: Feature[] = [
     </p>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-stagger">
     {
       features.map((f) => (
         <div
-          class="bg-[var(--bg-card)] rounded-2xl p-6 card-shadow transition-all duration-300 border border-[var(--border)]"
+          class="bg-[var(--bg-card)] rounded-2xl p-6 card-shadow border border-[var(--border)] hover-lift group"
         >
-          <div class="mb-4" style="color: var(--accent)">
-            <Icon name={f.icon} size={36} />
+          <div
+            class="w-12 h-12 flex items-center justify-center rounded-xl mb-5 transition-all duration-300 group-hover:scale-110"
+            style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)"
+          >
+            <Icon name={f.icon} size={24} />
           </div>
-          <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary)">{f.title}</h3>
-          <p class="text-base" style="color: var(--text-secondary)">{f.subtitle}</p>
+          <h3 class="text-xl font-bold mb-2 transition-colors duration-200 group-hover:text-[var(--accent)]" style="color: var(--text-primary)">{f.title}</h3>
+          <p class="text-sm leading-relaxed" style="color: var(--text-secondary)">{f.subtitle}</p>
         </div>
       ))
     }

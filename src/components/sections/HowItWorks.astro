@@ -9,7 +9,7 @@ const steps = [
 ]
 ---
 
-<Container id="how-it-works" className="bg-[var(--bg-secondary)]">
+<Container id="how-it-works" className="section-gradient">
   <div class="text-center mb-12">
     <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Как это работает</h2>
     <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
@@ -17,18 +17,19 @@ const steps = [
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+    <div class="hidden md:block absolute top-8 left-[12.5%] right-[12.5%] h-0.5" style="background: linear-gradient(to right, var(--accent), color-mix(in srgb, var(--accent) 30%, transparent))"></div>
     {
-      steps.map((step) => (
-        <div class="text-center">
+      steps.map((step, i) => (
+        <div class="text-center group">
           <div
-            class="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold text-[var(--text-on-accent)]"
-            style="background-color: var(--accent)"
+            class="relative w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-5 text-xl font-bold text-[var(--text-on-accent)] transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+            style="background: linear-gradient(135deg, var(--accent), var(--accent-hover)); box-shadow: 0 4px 16px var(--accent-glow)"
           >
             {step.num}
           </div>
-          <h3 class="text-lg font-bold mb-2" style="color: var(--text-primary)">{step.title}</h3>
-          <p class="text-sm" style="color: var(--text-secondary)">{step.desc}</p>
+          <h3 class="text-lg font-bold mb-2 transition-colors duration-200 group-hover:text-[var(--accent)]" style="color: var(--text-primary)">{step.title}</h3>
+          <p class="text-sm leading-relaxed max-w-[240px] md:mx-auto" style="color: var(--text-secondary)">{step.desc}</p>
         </div>
       ))
     }

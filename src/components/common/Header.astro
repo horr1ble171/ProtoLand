@@ -11,21 +11,24 @@ const navLinks = [
 ---
 
 <header
-  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b transition-colors duration-300"
+  class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b transition-colors duration-300"
   style="background-color: var(--header-bg); border-color: var(--border)"
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16 md:h-20">
-      <a href="#" class="flex items-center gap-2">
-        <img src="/logo.png" alt="ProtoLand" class="h-10 md:h-12 w-auto rounded-xl border-2" style="border-color: var(--border)" />
+      <a href="#" class="flex items-center gap-3 group">
+        <div class="relative">
+          <img src="/logo.png" alt="ProtoLand" class="h-10 md:h-11 w-auto rounded-xl border-2 transition-all duration-300 group-hover:border-[var(--accent)]" style="border-color: var(--border)" />
+        </div>
+        <span class="text-lg font-bold tracking-tight hidden sm:inline transition-colors duration-200 group-hover:text-[var(--accent)]" style="color: var(--text-primary)">ProtoLand</span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-8">
+      <nav class="hidden md:flex items-center gap-1">
         {
           navLinks.map((link) => (
             <a
               href={link.href}
-              class="text-sm font-medium transition-colors duration-200 hover:text-[var(--accent)]"
+              class="relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5"
               style="color: var(--text-secondary)"
             >
               {link.label}
@@ -34,9 +37,85 @@ const navLinks = [
         }
       </nav>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2">
         <ThemeSwitcher />
+        <button
+          id="mobile-menu-btn"
+          class="md:hidden w-9 h-9 relative flex items-center justify-center rounded-lg transition-all duration-200 border hover:border-[var(--accent)]"
+          style="background-color: var(--bg-card); border-color: var(--border); color: var(--text-secondary)"
+          aria-label="Меню"
+          aria-expanded="false"
+        >
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(-4px)" id="menu-line-1"></span>
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor" id="menu-line-2"></span>
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(4px)" id="menu-line-3"></span>
+        </button>
       </div>
     </div>
   </div>
+
+  <div
+    id="mobile-menu"
+    class="md:hidden overflow-hidden transition-all duration-300 max-h-0 border-t"
+    style="background-color: var(--bg-card); border-color: var(--border)"
+  >
+    <nav class="flex flex-col gap-1 px-4 py-3">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 active:scale-[0.98]"
+            style="color: var(--text-secondary)"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
 </header>
+
+<script>
+  const menuBtn = document.getElementById('mobile-menu-btn')
+  const mobileMenu = document.getElementById('mobile-menu')
+  const line1 = document.getElementById('menu-line-1')
+  const line2 = document.getElementById('menu-line-2')
+  const line3 = document.getElementById('menu-line-3')
+
+  function openMenu(): void {
+    mobileMenu?.classList.remove('max-h-0')
+    mobileMenu?.classList.add('max-h-80')
+    menuBtn?.setAttribute('aria-expanded', 'true')
+    if (line1) line1.style.transform = 'translateY(0) rotate(45deg)'
+    if (line2) line2.style.opacity = '0'
+    if (line2) line2.style.transform = 'scaleX(0)'
+    if (line3) line3.style.transform = 'translateY(0) rotate(-45deg)'
+  }
+
+  function closeMenu(): void {
+    mobileMenu?.classList.remove('max-h-80')
+    mobileMenu?.classList.add('max-h-0')
+    menuBtn?.setAttribute('aria-expanded', 'false')
+    if (line1) line1.style.transform = 'translateY(-4px) rotate(0deg)'
+    if (line2) line2.style.opacity = '1'
+    if (line2) line2.style.transform = 'scaleX(1)'
+    if (line3) line3.style.transform = 'translateY(4px) rotate(0deg)'
+  }
+
+  menuBtn?.addEventListener('click', () => {
+    const isOpen = menuBtn.getAttribute('aria-expanded') === 'true'
+    if (isOpen) closeMenu()
+    else openMenu()
+  })
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu)
+  })
+
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement
+    if (!target.closest('header') && menuBtn?.getAttribute('aria-expanded') === 'true') {
+      closeMenu()
+    }
+  })
+</script>

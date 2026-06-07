@@ -21,7 +21,7 @@ const testimonials = [
 ]
 ---
 
-<Container id="testimonials" className="bg-[var(--bg-secondary)]">
+<Container id="testimonials" className="section-gradient">
   <div class="text-center mb-12">
     <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Отзывы</h2>
     <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
@@ -29,21 +29,23 @@ const testimonials = [
     </p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 fade-stagger">
     {
       testimonials.map((t) => (
         <div
-          class="bg-[var(--bg-card)] rounded-2xl p-6 card-shadow border border-[var(--border)] flex flex-col"
+          class="bg-[var(--bg-card)] rounded-2xl p-6 card-shadow border border-[var(--border)] flex flex-col hover-lift"
         >
-          <div class="mb-4" style="color: var(--accent)">
-            <Icon name="quote" size={32} />
+          <div class="flex items-center gap-0.5 mb-4">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="var(--accent)" stroke="var(--accent)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ))}
           </div>
-          <p class="text-base flex-1 mb-6" style="color: var(--text-secondary)">
-            {t.text}
+          <p class="text-sm leading-relaxed flex-1 mb-6" style="color: var(--text-secondary)">
+            "{t.text}"
           </p>
-          <div>
-            <p class="font-bold" style="color: var(--text-primary)">{t.author}</p>
-            <p class="text-sm" style="color: var(--text-secondary)">{t.role}</p>
+          <div class="border-t pt-4" style="border-color: var(--border)">
+            <p class="font-bold text-sm" style="color: var(--text-primary)">{t.author}</p>
+            <p class="text-xs" style="color: var(--text-secondary)">{t.role}</p>
           </div>
         </div>
       ))

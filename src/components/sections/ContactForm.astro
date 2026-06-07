@@ -3,7 +3,7 @@ import Container from '../common/Container.astro'
 import Icon from '../UI/Icon.astro'
 ---
 
-<Container id="contact">
+<Container id="contact" className="section-gradient">
   <div class="text-center mb-12">
     <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color: var(--text-primary)">Свяжитесь с нами</h2>
     <p class="text-lg max-w-2xl mx-auto" style="color: var(--text-secondary)">
@@ -14,62 +14,60 @@ import Icon from '../UI/Icon.astro'
   <div class="max-w-xl mx-auto">
     <form id="demo-form" class="space-y-5" novalidate>
       <div>
-        <label for="name" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Имя</label>
+        <label for="name" class="block text-sm font-medium mb-1.5" style="color: var(--text-primary)">Имя</label>
         <input
           type="text"
           id="name"
           name="name"
           placeholder="Введите ваше имя"
           required
-          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none"
+          class="w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 outline-none focus:scale-[1.01]"
           style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
-          on:focus="this.style.borderColor='var(--accent)'"
-          on:blur="this.style.borderColor='var(--border)'"
         />
-        <span class="text-sm text-red-500 hidden" id="name-error">Пожалуйста, введите имя</span>
+        <span class="text-sm text-red-500 hidden mt-1 block font-medium" id="name-error">Пожалуйста, введите имя</span>
       </div>
 
       <div>
-        <label for="email" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Email</label>
+        <label for="email" class="block text-sm font-medium mb-1.5" style="color: var(--text-primary)">Email</label>
         <input
           type="email"
           id="email"
           name="email"
           placeholder="example@mail.ru"
           required
-          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none"
+          class="w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 outline-none focus:scale-[1.01]"
           style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
-          on:focus="this.style.borderColor='var(--accent)'"
-          on:blur="this.style.borderColor='var(--border)'"
         />
-        <span class="text-sm text-red-500 hidden" id="email-error">Пожалуйста, введите корректный email</span>
+        <span class="text-sm text-red-500 hidden mt-1 block font-medium" id="email-error">Пожалуйста, введите корректный email</span>
       </div>
 
       <div>
-        <label for="message" class="block text-sm font-medium mb-1" style="color: var(--text-primary)">Сообщение</label>
+        <label for="message" class="block text-sm font-medium mb-1.5" style="color: var(--text-primary)">Сообщение</label>
         <textarea
           id="message"
           name="message"
           rows={4}
           placeholder="Расскажите о вашем проекте..."
-          class="w-full px-4 py-3 rounded-xl border transition-colors duration-200 outline-none resize-y"
+          class="w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 outline-none resize-y focus:scale-[1.01]"
           style="background-color: var(--bg-card); color: var(--text-primary); border-color: var(--border)"
-          on:focus="this.style.borderColor='var(--accent)'"
-          on:blur="this.style.borderColor='var(--border)'"
         ></textarea>
       </div>
 
       <button
         type="submit"
-        class="w-full py-3.5 text-lg font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+        class="w-full py-3.5 text-lg font-semibold rounded-xl text-[var(--text-on-accent)] transition-all duration-200 hover-lift flex items-center justify-center gap-2"
+        style="background-color: var(--accent)"
       >
         Отправить
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
       </button>
     </form>
 
-    <div id="form-success" class="hidden text-center p-6 rounded-xl border card-shadow mt-4" style="background-color: var(--bg-card); border-color: var(--accent)">
+    <div id="form-success" class="hidden text-center p-8 rounded-2xl border-2 card-shadow mt-6" style="background-color: var(--bg-card); border-color: var(--accent)">
+      <div class="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent)">
+        <Icon name="check" size={28} />
+      </div>
       <p class="text-lg font-semibold flex items-center justify-center gap-2" style="color: var(--accent)">
-        <Icon name="check" size={22} />
         Демо-режим, заявка не отправлена
       </p>
       <p class="text-sm mt-2" style="color: var(--text-secondary)">В боевой версии мы получим ваше сообщение и ответим в течение дня.</p>
@@ -118,5 +116,15 @@ import Icon from '../UI/Icon.astro'
     console.log('=== Демо-режим: данные формы ===')
     console.log({ name: nameVal, email: emailVal, message: (document.getElementById('message') as HTMLTextAreaElement)?.value })
     console.log('=== Заявка не отправлена (демо) ===')
+  })
+
+  const inputs = document.querySelectorAll('#demo-form input, #demo-form textarea')
+  inputs.forEach((input) => {
+    input.addEventListener('focus', () => {
+      (input as HTMLElement).style.borderColor = 'var(--accent)'
+    })
+    input.addEventListener('blur', () => {
+      (input as HTMLElement).style.borderColor = 'var(--border)'
+    })
   })
 </script>

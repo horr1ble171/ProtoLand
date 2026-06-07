@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Icon from '../components/UI/Icon.astro'
 
 const presetColors = [
   { value: 'red', label: 'Красный', light: '#e53935', dark: '#ff5252' },
@@ -18,54 +17,68 @@ const presetColors = [
 ---
 
 <BaseLayout title="ProtoLand — Настройка лендинга" description="Настройте внешний вид лендинга: выберите тему и акцентный цвет.">
-  <div class="min-h-screen" style="background-color: var(--bg-primary); color: var(--text-primary)">
-    <div class="max-w-2xl mx-auto px-4 py-12">
+  <div class="min-h-screen section-gradient" style="color: var(--text-primary)">
+    <div class="max-w-3xl mx-auto px-4 py-12">
       <a
         href="/"
-        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-colors hover:text-[var(--accent)]"
+        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-all duration-200 hover:text-[var(--accent)] hover:gap-3"
         style="color: var(--text-secondary)"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
         На главную
       </a>
 
-      <h1 class="text-3xl md:text-4xl font-bold mb-2">Настройка лендинга</h1>
-      <p class="text-base mb-10" style="color: var(--text-secondary)">
-        Выберите цветовую схему и акцентный цвет — изменения сразу применяются и сохраняются.
-      </p>
+      <div class="flex items-start sm:items-center gap-3 sm:gap-4 mb-2">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 text-base sm:text-lg" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sm:w-5 sm:h-5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 8.92a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8.92 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1.08 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1.08z"/></svg>
+        </div>
+        <div class="min-w-0">
+          <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">Настройка лендинга</h1>
+          <p class="text-xs sm:text-sm mt-0.5 sm:mt-1" style="color: var(--text-secondary)">
+            Все изменения применяются сразу и сохраняются в браузере
+          </p>
+        </div>
+      </div>
 
-      <div class="space-y-8" id="customize-app">
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Тема оформления</h2>
+      <div id="customize-app" class="space-y-5 mt-10">
+        <!-- Theme -->
+        <div class="rounded-2xl p-6 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            </div>
+            <h2 class="text-lg font-bold">Тема оформления</h2>
+          </div>
           <div class="flex gap-3">
-            <button
-              class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200"
-              data-theme-value="light"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <button class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-theme-value="light">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
               Светлая
             </button>
-            <button
-              class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200"
-              data-theme-value="dark"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+            <button class="theme-btn flex-1 flex items-center justify-center gap-3 px-6 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-theme-value="dark">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
               Тёмная
             </button>
           </div>
         </div>
 
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Акцентный цвет</h2>
+        <!-- Accent Color -->
+        <div class="rounded-2xl p-6 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17" cy="10.5" r="1.5"/><circle cx="14.5" cy="15.5" r="1.5"/><circle cx="9" cy="14" r="1.5"/><circle cx="7.5" cy="9" r="1.5"/><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-3.27.64"/></svg>
+            </div>
+            <h2 class="text-lg font-bold">Акцентный цвет</h2>
+          </div>
 
           <div class="mb-6">
-            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Быстрый выбор</p>
-            <div class="flex gap-3 flex-wrap">
+            <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Быстрый выбор</p>
+            <div class="flex gap-2.5 flex-wrap">
               {presetColors.map((c) => (
                 <button
-                  class="preset-btn w-10 h-10 rounded-full border-2 transition-all duration-200 hover:scale-110"
+                  class="preset-btn w-10 h-10 rounded-xl border-2 transition-all duration-200 hover:scale-110 hover:shadow-lg"
                   data-accent-value={c.value}
                   aria-label={c.label}
+                  title={c.label}
                   style="background-color: var(--accent-color)"
                   data-light={c.light}
                   data-dark={c.dark}
@@ -74,25 +87,23 @@ const presetColors = [
             </div>
           </div>
 
-          <div class="border-t pt-6" style="border-color: var(--border)">
-            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Произвольный цвет</p>
+          <div class="border-t pt-5" style="border-color: var(--border)">
+            <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Произвольный цвет</p>
             <div class="flex items-center gap-4">
-              <div class="relative">
-                <input
-                  type="color"
-                  id="color-picker"
-                  class="w-14 h-14 rounded-xl border-2 cursor-pointer"
-                  style="border-color: var(--border); background: none; padding: 2px"
-                  value="#e53935"
-                />
-              </div>
+              <input
+                type="color"
+                id="color-picker"
+                class="w-14 h-14 rounded-xl border-2 cursor-pointer transition-all duration-200 hover:scale-105 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-lg"
+                style="border-color: var(--border); background: none"
+                value="#e53935"
+              />
               <div class="flex-1">
-                <label for="hex-input" class="text-xs font-medium block mb-1" style="color: var(--text-secondary)">HEX</label>
+                <label for="hex-input" class="text-xs font-medium block mb-1.5" style="color: var(--text-secondary)">HEX</label>
                 <input
                   type="text"
                   id="hex-input"
-                  class="w-full px-4 py-2.5 rounded-xl border font-mono text-sm outline-none transition-colors"
-                  style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+                  class="w-full px-4 py-2.5 rounded-xl border text-sm outline-none transition-colors"
+                  style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border); font-family: 'SF Mono', 'Fira Code', monospace"
                   placeholder="#e53935"
                   maxlength={7}
                 />
@@ -101,82 +112,89 @@ const presetColors = [
           </div>
         </div>
 
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Шрифт</h2>
+        <!-- Font Settings -->
+        <div class="rounded-2xl p-6 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            </div>
+            <h2 class="text-lg font-bold">Шрифт</h2>
+          </div>
 
-          <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Готовые шрифты</p>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="system">
-              <span class="text-lg">System</span>
-              <span class="text-xs opacity-60">Системный</span>
+          <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Готовые шрифты</p>
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-6">
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="system">
+              <span class="text-base">System</span>
+              <span class="text-[10px] opacity-60">Системный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="inter" style="font-family: Inter">
-              <span class="text-lg">Inter</span>
-              <span class="text-xs opacity-60">Современный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="inter" style="font-family: Inter">
+              <span class="text-base">Inter</span>
+              <span class="text-[10px] opacity-60">Современный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="roboto" style="font-family: Roboto">
-              <span class="text-lg">Roboto</span>
-              <span class="text-xs opacity-60">Классика</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="roboto" style="font-family: Roboto">
+              <span class="text-base">Roboto</span>
+              <span class="text-[10px] opacity-60">Классика</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="playfair" style="font-family: 'Playfair Display'">
-              <span class="text-lg">Playfair</span>
-              <span class="text-xs opacity-60">Премиум</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="playfair" style="font-family: 'Playfair Display'">
+              <span class="text-base">Playfair</span>
+              <span class="text-[10px] opacity-60">Премиум</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="montserrat" style="font-family: Montserrat">
-              <span class="text-lg">Montserrat</span>
-              <span class="text-xs opacity-60">Современный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="montserrat" style="font-family: Montserrat">
+              <span class="text-base">Montserrat</span>
+              <span class="text-[10px] opacity-60">Современный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="open-sans" style="font-family: 'Open Sans'">
-              <span class="text-lg">Open Sans</span>
-              <span class="text-xs opacity-60">Универсальный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="open-sans" style="font-family: 'Open Sans'">
+              <span class="text-base">Open Sans</span>
+              <span class="text-[10px] opacity-60">Универсальный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="lato" style="font-family: Lato">
-              <span class="text-lg">Lato</span>
-              <span class="text-xs opacity-60">Универсальный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="lato" style="font-family: Lato">
+              <span class="text-base">Lato</span>
+              <span class="text-[10px] opacity-60">Универсальный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="nunito" style="font-family: Nunito">
-              <span class="text-lg">Nunito</span>
-              <span class="text-xs opacity-60">Мягкий</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="nunito" style="font-family: Nunito">
+              <span class="text-base">Nunito</span>
+              <span class="text-[10px] opacity-60">Мягкий</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="poppins" style="font-family: Poppins">
-              <span class="text-lg">Poppins</span>
-              <span class="text-xs opacity-60">Современный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="poppins" style="font-family: Poppins">
+              <span class="text-base">Poppins</span>
+              <span class="text-[10px] opacity-60">Современный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="raleway" style="font-family: Raleway">
-              <span class="text-lg">Raleway</span>
-              <span class="text-xs opacity-60">Элегантный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="raleway" style="font-family: Raleway">
+              <span class="text-base">Raleway</span>
+              <span class="text-[10px] opacity-60">Элегантный</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="ubuntu" style="font-family: Ubuntu">
-              <span class="text-lg">Ubuntu</span>
-              <span class="text-xs opacity-60">Технический</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="ubuntu" style="font-family: Ubuntu">
+              <span class="text-base">Ubuntu</span>
+              <span class="text-[10px] opacity-60">Технический</span>
             </button>
-            <button class="font-btn flex flex-col items-center gap-2 px-4 py-4 rounded-xl border-2 font-semibold transition-all duration-200" data-font-value="oswald" style="font-family: Oswald">
-              <span class="text-lg">Oswald</span>
-              <span class="text-xs opacity-60">Акцентный</span>
+            <button class="font-btn flex flex-col items-center gap-1.5 px-3 py-3.5 rounded-xl border-2 font-semibold transition-all duration-200 text-sm" data-font-value="oswald" style="font-family: Oswald">
+              <span class="text-base">Oswald</span>
+              <span class="text-[10px] opacity-60">Акцентный</span>
             </button>
           </div>
 
-          <div class="border-t pt-6 mb-5" style="border-color: var(--border)">
-            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Свой шрифт из Google Fonts</p>
+          <div class="border-t pt-5 mb-5" style="border-color: var(--border)">
+            <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Свой шрифт из Google Fonts</p>
             <div class="flex gap-3">
               <input
                 type="text"
                 id="custom-font-input"
-                class="flex-1 px-4 py-2.5 rounded-xl border font-mono text-sm outline-none transition-colors"
+                class="flex-1 px-4 py-2.5 rounded-xl border text-sm outline-none transition-colors"
                 style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
                 placeholder="Exo 2"
               />
               <button
                 id="custom-font-apply"
-                class="px-5 py-2.5 text-sm font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+                class="px-5 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 hover-lift"
+                style="background-color: var(--accent); color: var(--text-on-accent)"
               >
                 Применить
               </button>
             </div>
           </div>
 
-          <div class="border-t pt-6" style="border-color: var(--border)">
-            <p class="text-sm font-medium mb-3" style="color: var(--text-secondary)">Насыщенность (weight)</p>
+          <div class="border-t pt-5" style="border-color: var(--border)">
+            <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Насыщенность (weight)</p>
             <div class="flex flex-wrap gap-2" id="weight-presets">
               {[300, 400, 500, 600, 700, 800, 900].map((w) => (
                 <button
@@ -189,157 +207,186 @@ const presetColors = [
           </div>
         </div>
 
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Анимации</h2>
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="font-medium" style="color: var(--text-primary)">Fade-in при скролле</p>
-              <p class="text-sm" style="color: var(--text-secondary)">Плавное появление секций при прокрутке</p>
+        <!-- Toggles -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          <div class="rounded-2xl p-5 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-sm" style="color: var(--text-primary)">Анимации</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Fade-in при скролле</p>
+                </div>
+              </div>
+              <button id="anim-toggle" class="relative w-12 h-6 rounded-full transition-colors duration-200 shrink-0" style="background-color: var(--border)" role="switch" aria-checked="true">
+                <span id="anim-knob" class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+              </button>
             </div>
-            <button
-              id="anim-toggle"
-              class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--border)"
-              role="switch"
-              aria-checked="true"
-            >
-              <span id="anim-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
-            </button>
           </div>
-        </div>
 
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Тени блоков</h2>
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="font-medium" style="color: var(--text-primary)">Тени карточек</p>
-              <p class="text-sm" style="color: var(--text-secondary)">Отображение теней у секций и карточек на сайте</p>
+          <div class="rounded-2xl p-5 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-sm" style="color: var(--text-primary)">Тени блоков</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Тени у карточек и секций</p>
+                </div>
+              </div>
+              <button id="shadow-toggle" class="relative w-12 h-6 rounded-full transition-colors duration-200 shrink-0" style="background-color: var(--border)" role="switch" aria-checked="true">
+                <span id="shadow-knob" class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+              </button>
             </div>
-            <button
-              id="shadow-toggle"
-              class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--border)"
-              role="switch"
-              aria-checked="true"
-            >
-              <span id="shadow-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
-            </button>
           </div>
-        </div>
 
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Кастомный скроллбар</h2>
-          <div class="flex items-center justify-between">
-            <div>
-              <p class="font-medium" style="color: var(--text-primary)">Стилизованный скролл</p>
-              <p class="text-sm" style="color: var(--text-secondary)">Полоса прокрутки в акцентном цвете</p>
+          <div class="rounded-2xl p-5 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-sm" style="color: var(--text-primary)">Кастомный скроллбар</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Стилизованная полоса прокрутки</p>
+                </div>
+              </div>
+              <button id="scrollbar-toggle" class="relative w-12 h-6 rounded-full transition-colors duration-200 shrink-0" style="background-color: var(--border)" role="switch" aria-checked="true">
+                <span id="scrollbar-knob" class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+              </button>
             </div>
-            <button
-              id="scrollbar-toggle"
-              class="relative w-14 h-7 rounded-full transition-colors duration-200"
-              style="background-color: var(--border)"
-              role="switch"
-              aria-checked="true"
-            >
-              <span id="scrollbar-knob" class="absolute top-0.5 left-0.5 w-6 h-6 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
-            </button>
+          </div>
+
+          <div class="rounded-2xl p-5 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
+            <div class="flex items-center justify-between">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <p class="font-semibold text-sm" style="color: var(--text-primary)">Скругление блоков</p>
+                  <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Радиус углов карточек и панелей</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <span id="radius-badge" class="text-xs font-semibold px-2 py-1 rounded-md" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">16px</span>
+              </div>
+            </div>
+            <div class="mt-4 flex gap-2 flex-wrap" id="radius-presets">
+              <button class="radius-btn flex-1 min-w-[60px] px-3 py-2 rounded-lg font-semibold text-xs transition-all duration-200 border-2" data-radius-value="0" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">0px</button>
+              <button class="radius-btn flex-1 min-w-[60px] px-3 py-2 rounded-lg font-semibold text-xs transition-all duration-200 border-2" data-radius-value="8" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">8px</button>
+              <button class="radius-btn flex-1 min-w-[60px] px-3 py-2 rounded-lg font-semibold text-xs transition-all duration-200 border-2" data-radius-value="16" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">16px</button>
+              <button class="radius-btn flex-1 min-w-[60px] px-3 py-2 rounded-lg font-semibold text-xs transition-all duration-200 border-2" data-radius-value="custom" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Своё</button>
+            </div>
+            <div id="radius-custom" class="hidden mt-3">
+              <label class="flex items-center gap-3">
+                <span class="text-xs font-medium shrink-0" style="color: var(--text-secondary)">px</span>
+                <input type="range" id="radius-slider" min="0" max="32" value="16" class="flex-1 accent-[var(--accent)] cursor-pointer" />
+                <output id="radius-value" class="text-sm font-mono font-semibold min-w-[2rem] text-right" style="color: var(--accent)">16</output>
+              </label>
+            </div>
           </div>
         </div>
 
+        <!-- Reset -->
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Скругление блоков</h2>
-          <p class="text-sm mb-4" style="color: var(--text-secondary)">Степень закругления углов у карточек и панелей</p>
-          <div class="flex gap-2 mb-5 flex-wrap" id="radius-presets">
-            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="16" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Скруглённые</button>
-            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="0" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Прямые</button>
-            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="8" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Полукруглые</button>
-            <button class="radius-btn flex-1 min-w-[80px] px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200 border-2" data-radius-value="custom" style="background-color: var(--bg-secondary); color: var(--text-primary); border-color: transparent">Своё</button>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold">Сброс настроек</h2>
+              <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Вернуть все настройки по умолчанию</p>
+            </div>
           </div>
-          <div id="radius-custom" class="hidden">
-            <label class="flex items-center gap-3">
-              <span class="text-sm font-medium shrink-0" style="color: var(--text-secondary)">px</span>
-              <input type="range" id="radius-slider" min="0" max="32" value="16" class="flex-1 accent-[var(--accent)] cursor-pointer" />
-              <output id="radius-value" class="text-sm font-mono font-semibold min-w-[2rem] text-right" style="color: var(--accent)">16</output>
-            </label>
-          </div>
-        </div>
-
-        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <h2 class="text-xl font-bold mb-4">Сброс настроек</h2>
-          <p class="text-sm mb-4" style="color: var(--text-secondary)">
-            Вернуть все настройки по умолчанию (светлая тема, красный акцент, системный шрифт).
-          </p>
           <button
             id="reset-btn"
-            class="w-full py-3 text-base font-semibold rounded-xl transition-all duration-200"
-            style="background-color: #e53935; color: #fff"
+            class="w-full py-3 text-base font-semibold rounded-xl transition-all duration-200 hover-lift"
+            style="background: linear-gradient(135deg, #e53935, #c62828); color: #fff"
           >
             Сбросить всё
           </button>
         </div>
 
+        <!-- Export / Import -->
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
-          <div class="flex gap-1 mb-4">
-            <button id="export-tab-btn" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">Экспорт</button>
-            <button id="import-tab-btn" class="flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all" style="background-color: var(--bg-secondary); color: var(--text-secondary)">Импорт</button>
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <div>
+              <h2 class="text-lg font-bold">Экспорт / Импорт</h2>
+              <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Сохраните настройки или перенесите на другой сайт</p>
+            </div>
+          </div>
+
+          <div class="flex gap-1 mb-4 p-1 rounded-xl" style="background-color: var(--bg-secondary)">
+            <button id="export-tab-btn" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all" style="background-color: var(--accent); color: var(--text-on-accent)">Экспорт</button>
+            <button id="import-tab-btn" class="flex-1 py-2 text-sm font-semibold rounded-lg transition-all" style="background-color: transparent; color: var(--text-secondary)">Импорт</button>
           </div>
 
           <div id="export-panel">
-            <p class="text-sm mb-3" style="color: var(--text-secondary)">
+            <p class="text-xs mb-3" style="color: var(--text-secondary)">
               Скопируйте JSON и отправьте разработчику.
             </p>
             <textarea
               id="export-json"
-              rows={5}
-              class="w-full px-4 py-3 rounded-xl border text-xs font-mono outline-none resize-y mb-3 transition-colors"
-              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+              rows={4}
+              class="w-full px-4 py-3 rounded-xl border text-xs outline-none resize-y mb-3 transition-colors"
+              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border); font-family: 'SF Mono', 'Fira Code', monospace"
               readonly
             ></textarea>
             <div class="flex gap-3">
               <button
                 id="export-btn"
-                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+                class="flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 hover-lift"
+                style="background-color: var(--accent); color: var(--text-on-accent)"
               >
                 Копировать
               </button>
               <button
                 id="download-btn"
-                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--accent)] border-2 border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--text-on-accent)] transition-all duration-200"
+                class="flex-1 py-2.5 text-sm font-semibold rounded-xl border-2 transition-all duration-200 hover-lift"
+                style="border-color: var(--accent); color: var(--accent)"
               >
                 Скачать JSON
               </button>
             </div>
-            <div id="export-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">Скопировано!</div>
+            <div id="export-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent)">Скопировано!</div>
           </div>
 
           <div id="import-panel" class="hidden">
-            <p class="text-sm mb-3" style="color: var(--text-secondary)">
+            <p class="text-xs mb-3" style="color: var(--text-secondary)">
               Вставьте JSON или загрузите файл.
             </p>
             <textarea
               id="import-json"
-              rows={5}
-              class="w-full px-4 py-3 rounded-xl border text-xs font-mono outline-none resize-y mb-3 transition-colors"
-              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+              rows={4}
+              class="w-full px-4 py-3 rounded-xl border text-xs outline-none resize-y mb-3 transition-colors"
+              style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border); font-family: 'SF Mono', 'Fira Code', monospace"
               placeholder='{"theme":"dark","accent":"#ff5252","font":"inter","animations":true}'
             ></textarea>
             <div class="flex gap-3">
               <button
                 id="import-btn"
-                class="flex-1 py-3 text-base font-semibold rounded-xl text-[var(--text-on-accent)] bg-[var(--accent)] hover:bg-[var(--accent-hover)] transition-all duration-200"
+                class="flex-1 py-2.5 text-sm font-semibold rounded-xl transition-all duration-200 hover-lift"
+                style="background-color: var(--accent); color: var(--text-on-accent)"
               >
                 Применить
               </button>
               <label
-                class="flex-1 py-3 text-base font-semibold rounded-xl text-center cursor-pointer border-2 transition-all duration-200"
+                class="flex-1 py-2.5 text-sm font-semibold rounded-xl text-center cursor-pointer border-2 transition-all duration-200 hover-lift"
                 style="border-color: var(--accent); color: var(--accent)"
               >
                 Загрузить файл
                 <input type="file" id="import-file" accept=".json" class="hidden" />
               </label>
             </div>
-            <div id="import-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: var(--accent)">Тема применена!</div>
-            <div id="import-error" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: var(--bg-secondary); color: #e53935">Ошибка: неверный формат JSON</div>
+            <div id="import-toast" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: color-mix(in srgb, var(--accent) 10%, transparent); color: var(--accent)">Тема применена!</div>
+            <div id="import-error" class="hidden mt-2 text-sm text-center font-medium py-2 px-4 rounded-lg" style="background-color: color-mix(in srgb, #e53935 10%, transparent); color: #e53935">Ошибка: неверный формат JSON</div>
           </div>
         </div>
       </div>
@@ -408,7 +455,7 @@ const presetColors = [
         animToggle.setAttribute('aria-checked', animations.toString())
         animToggle.style.backgroundColor = animations ? 'var(--accent)' : 'var(--border)'
       }
-      if (animKnob) animKnob.style.transform = animations ? 'translateX(28px)' : 'translateX(0)'
+      if (animKnob) animKnob.style.transform = animations ? 'translateX(24px)' : 'translateX(0)'
 
       const shadowToggle = document.getElementById('shadow-toggle') as HTMLElement | null
       const shadowKnob = document.getElementById('shadow-knob') as HTMLElement | null
@@ -417,7 +464,7 @@ const presetColors = [
         shadowToggle.setAttribute('aria-checked', shadows.toString())
         shadowToggle.style.backgroundColor = shadows ? 'var(--accent)' : 'var(--border)'
       }
-      if (shadowKnob) shadowKnob.style.transform = shadows ? 'translateX(28px)' : 'translateX(0)'
+      if (shadowKnob) shadowKnob.style.transform = shadows ? 'translateX(24px)' : 'translateX(0)'
 
       const scrollbarToggle = document.getElementById('scrollbar-toggle') as HTMLElement | null
       const scrollbarKnob = document.getElementById('scrollbar-knob') as HTMLElement | null
@@ -426,8 +473,11 @@ const presetColors = [
         scrollbarToggle.setAttribute('aria-checked', scrollbar.toString())
         scrollbarToggle.style.backgroundColor = scrollbar ? 'var(--accent)' : 'var(--border)'
       }
-      if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(28px)' : 'translateX(0)'
+      if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(24px)' : 'translateX(0)'
       const radius = getStoredRadius()
+
+      const radiusBadge = document.getElementById('radius-badge')
+      if (radiusBadge) radiusBadge.textContent = radius + 'px'
 
       document.querySelectorAll('.weight-btn').forEach((btn) => {
         const val = btn.getAttribute('data-weight-value')
@@ -586,7 +636,7 @@ const presetColors = [
         const next = !current
         animToggleEl.setAttribute('aria-checked', next.toString())
         animToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
-        if (animKnobEl) animKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        if (animKnobEl) animKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
         setAnimations(next)
       })
 
@@ -597,7 +647,7 @@ const presetColors = [
         const next = !current
         shadowToggleEl.setAttribute('aria-checked', next.toString())
         shadowToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
-        if (shadowKnobEl) shadowKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        if (shadowKnobEl) shadowKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
         setShadows(next)
       })
 
@@ -608,7 +658,7 @@ const presetColors = [
         const next = !current
         scrollbarToggleEl.setAttribute('aria-checked', next.toString())
         scrollbarToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
-        if (scrollbarKnobEl) scrollbarKnobEl.style.transform = next ? 'translateX(28px)' : 'translateX(0)'
+        if (scrollbarKnobEl) scrollbarKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
         setScrollbar(next)
       })
 
@@ -632,6 +682,8 @@ const presetColors = [
         const px = parseInt(radiusSlider.value)
         setRadius(px)
         if (radiusOutput) radiusOutput.textContent = px.toString()
+        const badge = document.getElementById('radius-badge')
+        if (badge) badge.textContent = px + 'px'
         document.querySelectorAll('.radius-btn').forEach((b) => {
           const isCustom = b.getAttribute('data-radius-value') === 'custom'
           const isActive = isCustom || b.getAttribute('data-radius-value') === px.toString()
@@ -676,7 +728,7 @@ const presetColors = [
         if (exportJson) exportJson.value = exportTheme()
         exportTabBtn.style.backgroundColor = 'var(--accent)'
         exportTabBtn.style.color = 'var(--text-on-accent)'
-        importTabBtn && (importTabBtn.style.backgroundColor = 'var(--bg-secondary)')
+        importTabBtn && (importTabBtn.style.backgroundColor = 'transparent')
         importTabBtn && (importTabBtn.style.color = 'var(--text-secondary)')
       })
 
@@ -685,7 +737,7 @@ const presetColors = [
         importPanel?.classList.remove('hidden')
         importTabBtn.style.backgroundColor = 'var(--accent)'
         importTabBtn.style.color = 'var(--text-on-accent)'
-        exportTabBtn && (exportTabBtn.style.backgroundColor = 'var(--bg-secondary)')
+        exportTabBtn && (exportTabBtn.style.backgroundColor = 'transparent')
         exportTabBtn && (exportTabBtn.style.color = 'var(--text-secondary)')
       })
 
