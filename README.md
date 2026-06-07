@@ -42,14 +42,3 @@ src/
 └── utils/
     └── themeStore.ts
 ```
-
-## Деплой на Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/horr1ble171/ProtoLand)
-
-Или через CLI:
-
-```bash
-npm i -g vercel
-vercel --prod
-```
