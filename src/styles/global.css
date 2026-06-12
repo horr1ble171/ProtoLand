@@ -88,6 +88,9 @@ body::before {
   --radius-panel: 12px;
   --radius-btn: 8px;
   --font-weight: 400;
+  --gradient-intensity: 70;
+  --gradient-from: var(--accent);
+  --gradient-to: var(--accent-hover);
 }
 
 .font-bold, h1, h2, h3, h4, h5, h6, strong, b, th {
@@ -245,7 +248,15 @@ body::before {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  color: var(--accent);
+}
+
+:root[data-gradient-text="true"] .gradient-text {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-intensity) * 1%), var(--text-primary)),
+    color-mix(in srgb, var(--gradient-to) calc(var(--gradient-intensity) * 1%), var(--text-primary))
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

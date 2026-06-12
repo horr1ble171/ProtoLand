@@ -25,6 +25,10 @@ const ANIM_KEY = 'protoland-animations'
 const SHADOW_KEY = 'protoland-shadows'
 const SCROLLBAR_KEY = 'protoland-scrollbar'
 const RADIUS_KEY = 'protoland-radius'
+const GRADIENT_ENABLED_KEY = 'protoland-gradient-enabled'
+const GRADIENT_INTENSITY_KEY = 'protoland-gradient-intensity'
+const GRADIENT_FROM_KEY = 'protoland-gradient-from'
+const GRADIENT_TO_KEY = 'protoland-gradient-to'
 
 const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   red: { light: '#e53935', dark: '#ff5252' },
@@ -40,7 +44,7 @@ const PRESET_COLORS: Record<string, { light: string; dark: string }> = {
   fuchsia: { light: '#c026d3', dark: '#e879f9' },
 }
 
-function darken(hex: string, amount: number): string {
+export function darken(hex: string, amount: number): string {
   const num = parseInt(hex.slice(1), 16)
   const r = Math.max(0, (num >> 16) + amount)
   const g = Math.max(0, ((num >> 8) & 0x00ff) + amount)
@@ -129,12 +133,76 @@ export function getStoredRadius(): number {
   return getStoredValue<number>(RADIUS_KEY, 16)
 }
 
+export function getStoredGradientEnabled(): boolean {
+  return getStoredValue<string>(GRADIENT_ENABLED_KEY, 'false') === 'true'
+}
+
+export function getStoredGradientIntensity(): number {
+  return getStoredValue<number>(GRADIENT_INTENSITY_KEY, 70)
+}
+
+export function getStoredGradientFrom(): string {
+  return getStoredValue<string>(GRADIENT_FROM_KEY, '')
+}
+
+export function getStoredGradientTo(): string {
+  return getStoredValue<string>(GRADIENT_TO_KEY, '')
+}
+
 export function setRadius(px: number): void {
   setStoredValue(RADIUS_KEY, px.toString())
   const root = document.documentElement
   root.style.setProperty('--radius-card', px + 'px')
   root.style.setProperty('--radius-panel', Math.round(px * 0.75) + 'px')
   root.style.setProperty('--radius-btn', Math.round(px * 0.5) + 'px')
+}
+
+export function applyGradient(): void {
+  const root = document.documentElement
+  const enabled = getStoredGradientEnabled()
+  const intensity = getStoredGradientIntensity()
+  const from = getStoredGradientFrom()
+  const to = getStoredGradientTo()
+
+  if (enabled) {
+    root.setAttribute('data-gradient-text', 'true')
+  } else {
+    root.removeAttribute('data-gradient-text')
+  }
+
+  root.style.setProperty('--gradient-intensity', intensity.toString())
+
+  if (from) {
+    root.style.setProperty('--gradient-from', from)
+  } else {
+    root.style.removeProperty('--gradient-from')
+  }
+
+  if (to) {
+    root.style.setProperty('--gradient-to', to)
+  } else {
+    root.style.removeProperty('--gradient-to')
+  }
+}
+
+export function setGradientEnabled(enabled: boolean): void {
+  setStoredValue(GRADIENT_ENABLED_KEY, enabled.toString())
+  applyGradient()
+}
+
+export function setGradientIntensity(intensity: number): void {
+  setStoredValue(GRADIENT_INTENSITY_KEY, intensity.toString())
+  applyGradient()
+}
+
+export function setGradientFrom(color: string): void {
+  setStoredValue(GRADIENT_FROM_KEY, color)
+  applyGradient()
+}
+
+export function setGradientTo(color: string): void {
+  setStoredValue(GRADIENT_TO_KEY, color)
+  applyGradient()
 }
 
 export function getAccentColor(accent: string, theme: Theme): string {
@@ -187,6 +255,7 @@ export function initTheme(): void {
   setShadows(getStoredShadows())
   setScrollbar(getStoredScrollbar())
   setRadius(getStoredRadius())
+  applyGradient()
 }
 
 export function setTheme(theme: Theme): void {
@@ -267,6 +336,10 @@ export function resetSettings(): void {
   localStorage.removeItem(SHADOW_KEY)
   localStorage.removeItem(SCROLLBAR_KEY)
   localStorage.removeItem(RADIUS_KEY)
+  localStorage.removeItem(GRADIENT_ENABLED_KEY)
+  localStorage.removeItem(GRADIENT_INTENSITY_KEY)
+  localStorage.removeItem(GRADIENT_FROM_KEY)
+  localStorage.removeItem(GRADIENT_TO_KEY)
   initTheme()
 }
 
@@ -281,7 +354,11 @@ export function exportTheme(): string {
   const shadows = getStoredShadows()
   const scrollbar = getStoredScrollbar()
   const radius = getStoredRadius()
-  return JSON.stringify({ theme, accent: color, font, fontWeight, customFont, animations, shadows, scrollbar, radius }, null, 2)
+  const gradientEnabled = getStoredGradientEnabled()
+  const gradientIntensity = getStoredGradientIntensity()
+  const gradientFrom = getStoredGradientFrom()
+  const gradientTo = getStoredGradientTo()
+  return JSON.stringify({ theme, accent: color, font, fontWeight, customFont, animations, shadows, scrollbar, radius, gradientEnabled, gradientIntensity, gradientFrom, gradientTo }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -298,6 +375,10 @@ export function importTheme(json: string): boolean {
     const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
     const scrollbar = typeof data.scrollbar === 'boolean' ? data.scrollbar : true
     const radius = typeof data.radius === 'number' ? data.radius : 16
+    const gradientEnabled = typeof data.gradientEnabled === 'boolean' ? data.gradientEnabled : false
+    const gradientIntensity = typeof data.gradientIntensity === 'number' ? data.gradientIntensity : 70
+    const gradientFrom = typeof data.gradientFrom === 'string' ? data.gradientFrom : ''
+    const gradientTo = typeof data.gradientTo === 'string' ? data.gradientTo : ''
 
     applyTheme(theme, accent, font)
     setFontWeight(fontWeight)
@@ -310,6 +391,10 @@ export function importTheme(json: string): boolean {
     setShadows(shadows)
     setScrollbar(scrollbar)
     setRadius(radius)
+    setGradientEnabled(gradientEnabled)
+    setGradientIntensity(gradientIntensity)
+    if (gradientFrom) setGradientFrom(gradientFrom)
+    if (gradientTo) setGradientTo(gradientTo)
     return true
   } catch {
     return false

@@ -291,6 +291,74 @@ const presetColors = [
           </div>
         </div>
 
+        <!-- Gradient Text -->
+        <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            </div>
+            <div class="flex-1">
+              <h2 class="text-lg font-bold">Градиентный текст</h2>
+              <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Эффект градиента для заголовков</p>
+            </div>
+            <button id="gradient-toggle" class="relative w-12 h-6 rounded-full transition-colors duration-200 shrink-0" style="background-color: var(--border)" role="switch" aria-checked="false">
+              <span id="gradient-knob" class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(0)" />
+            </button>
+          </div>
+
+          <div id="gradient-settings" class="hidden space-y-5">
+            <div>
+              <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Цвет 1 (от)</p>
+              <div class="flex items-center gap-3">
+                <input
+                  type="color"
+                  id="gradient-from-picker"
+                  class="w-12 h-12 rounded-xl border-2 cursor-pointer transition-all duration-200 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-lg"
+                  style="border-color: var(--border); background: none"
+                  value="#e53935"
+                />
+                <input
+                  type="text"
+                  id="gradient-from-hex"
+                  class="flex-1 px-4 py-2.5 rounded-xl border text-sm outline-none transition-colors font-mono"
+                  style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+                  placeholder="#e53935"
+                  maxlength={7}
+                />
+              </div>
+            </div>
+
+            <div>
+              <p class="text-xs font-medium mb-3 uppercase tracking-wider" style="color: var(--text-secondary)">Цвет 2 (до)</p>
+              <div class="flex items-center gap-3">
+                <input
+                  type="color"
+                  id="gradient-to-picker"
+                  class="w-12 h-12 rounded-xl border-2 cursor-pointer transition-all duration-200 [&::-webkit-color-swatch-wrapper]:p-0 [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-lg"
+                  style="border-color: var(--border); background: none"
+                  value="#c62828"
+                />
+                <input
+                  type="text"
+                  id="gradient-to-hex"
+                  class="flex-1 px-4 py-2.5 rounded-xl border text-sm outline-none transition-colors font-mono"
+                  style="background-color: var(--bg-primary); color: var(--text-primary); border-color: var(--border)"
+                  placeholder="#c62828"
+                  maxlength={7}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="flex items-center gap-3">
+                <span class="text-xs font-medium shrink-0" style="color: var(--text-secondary)">Интенсивность</span>
+                <input type="range" id="gradient-intensity-slider" min="0" max="100" value="70" class="flex-1 accent-[var(--accent)] cursor-pointer" />
+                <output id="gradient-intensity-value" class="text-sm font-mono font-semibold min-w-[2.5rem] text-right" style="color: var(--accent)">70%</output>
+              </label>
+            </div>
+          </div>
+        </div>
+
         <!-- Reset -->
         <div class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
           <div class="flex items-center gap-3 mb-4">
@@ -394,7 +462,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, getStoredFontWeight, getStoredCustomFont, setTheme, setAccent, setFont, setFontWeight, setCustomFont, loadGoogleFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, getStoredFontWeight, getStoredCustomFont, getStoredGradientEnabled, getStoredGradientIntensity, getStoredGradientFrom, getStoredGradientTo, setTheme, setAccent, setFont, setFontWeight, setCustomFont, loadGoogleFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, setGradientEnabled, setGradientIntensity, setGradientFrom, setGradientTo, applyGradient, darken, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -527,6 +595,38 @@ const presetColors = [
       if (radiusCustom) radiusCustom.classList.toggle('hidden', !showCustom)
       if (radiusSlider) radiusSlider.value = radius.toString()
       if (radiusOutput) radiusOutput.textContent = radius.toString()
+
+      const gradientToggle = document.getElementById('gradient-toggle') as HTMLElement | null
+      const gradientKnob = document.getElementById('gradient-knob') as HTMLElement | null
+      const gradientSettings = document.getElementById('gradient-settings') as HTMLElement | null
+      const gradientEnabled = getStoredGradientEnabled()
+      if (gradientToggle) {
+        gradientToggle.setAttribute('aria-checked', gradientEnabled.toString())
+        gradientToggle.style.backgroundColor = gradientEnabled ? 'var(--accent)' : 'var(--border)'
+      }
+      if (gradientKnob) gradientKnob.style.transform = gradientEnabled ? 'translateX(24px)' : 'translateX(0)'
+      if (gradientSettings) gradientSettings.classList.toggle('hidden', !gradientEnabled)
+
+      const gradientIntensity = getStoredGradientIntensity()
+      const gradientIntensitySlider = document.getElementById('gradient-intensity-slider') as HTMLInputElement | null
+      const gradientIntensityValue = document.getElementById('gradient-intensity-value') as HTMLElement | null
+      if (gradientIntensitySlider) gradientIntensitySlider.value = gradientIntensity.toString()
+      if (gradientIntensityValue) gradientIntensityValue.textContent = gradientIntensity + '%'
+
+      const gradientFrom = getStoredGradientFrom()
+      const gradientTo = getStoredGradientTo()
+      const gradientFromPicker = document.getElementById('gradient-from-picker') as HTMLInputElement | null
+      const gradientFromHex = document.getElementById('gradient-from-hex') as HTMLInputElement | null
+      const gradientToPicker = document.getElementById('gradient-to-picker') as HTMLInputElement | null
+      const gradientToHex = document.getElementById('gradient-to-hex') as HTMLInputElement | null
+
+      const accentColor = getAccentColor(getStoredAccent(), getStoredTheme())
+      const hoverColor = accentColor.startsWith('#') ? darken(accentColor, getStoredTheme() === 'light' ? -30 : 20) : accentColor
+
+      if (gradientFromPicker) gradientFromPicker.value = gradientFrom || accentColor
+      if (gradientFromHex) gradientFromHex.value = gradientFrom || accentColor
+      if (gradientToPicker) gradientToPicker.value = gradientTo || hoverColor
+      if (gradientToHex) gradientToHex.value = gradientTo || hoverColor
 
       const picker = document.getElementById('color-picker') as HTMLInputElement | null
       const hexInput = document.getElementById('hex-input') as HTMLInputElement | null
@@ -805,6 +905,83 @@ const presetColors = [
         }
         reader.readAsText(file)
         importFile.value = ''
+      })
+
+      const gradientToggleEl = document.getElementById('gradient-toggle') as HTMLElement | null
+      const gradientKnobEl = document.getElementById('gradient-knob') as HTMLElement | null
+      const gradientSettingsEl = document.getElementById('gradient-settings') as HTMLElement | null
+      gradientToggleEl?.addEventListener('click', () => {
+        const current = gradientToggleEl.getAttribute('aria-checked') === 'true'
+        const next = !current
+        gradientToggleEl.setAttribute('aria-checked', next.toString())
+        gradientToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
+        if (gradientKnobEl) gradientKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
+        if (gradientSettingsEl) gradientSettingsEl.classList.toggle('hidden', !next)
+        setGradientEnabled(next)
+      })
+
+      const gradientFromPicker = document.getElementById('gradient-from-picker') as HTMLInputElement | null
+      const gradientFromHex = document.getElementById('gradient-from-hex') as HTMLInputElement | null
+      const gradientToPicker = document.getElementById('gradient-to-picker') as HTMLInputElement | null
+      const gradientToHex = document.getElementById('gradient-to-hex') as HTMLInputElement | null
+
+      gradientFromPicker?.addEventListener('input', () => {
+        const color = gradientFromPicker.value
+        if (gradientFromHex) gradientFromHex.value = color
+        setGradientFrom(color)
+      })
+
+      gradientFromHex?.addEventListener('input', () => {
+        let val = gradientFromHex.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (/^#[0-9a-f]{6}$/i.test(val)) {
+          if (gradientFromPicker) gradientFromPicker.value = val
+          setGradientFrom(val)
+        }
+      })
+
+      gradientFromHex?.addEventListener('blur', () => {
+        let val = gradientFromHex.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (!/^#[0-9a-f]{6}$/i.test(val)) {
+          const stored = getStoredGradientFrom()
+          const fallback = stored || getAccentColor(getStoredAccent(), getStoredTheme())
+          gradientFromHex.value = fallback
+        }
+      })
+
+      gradientToPicker?.addEventListener('input', () => {
+        const color = gradientToPicker.value
+        if (gradientToHex) gradientToHex.value = color
+        setGradientTo(color)
+      })
+
+      gradientToHex?.addEventListener('input', () => {
+        let val = gradientToHex.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (/^#[0-9a-f]{6}$/i.test(val)) {
+          if (gradientToPicker) gradientToPicker.value = val
+          setGradientTo(val)
+        }
+      })
+
+      gradientToHex?.addEventListener('blur', () => {
+        let val = gradientToHex.value.trim()
+        if (!val.startsWith('#')) val = '#' + val
+        if (!/^#[0-9a-f]{6}$/i.test(val)) {
+          const stored = getStoredGradientTo()
+          const accentColor = getAccentColor(getStoredAccent(), getStoredTheme())
+          const fallback = stored || darken(accentColor, getStoredTheme() === 'light' ? -30 : 20)
+          gradientToHex.value = fallback
+        }
+      })
+
+      const gradientIntensitySlider = document.getElementById('gradient-intensity-slider') as HTMLInputElement | null
+      const gradientIntensityValue = document.getElementById('gradient-intensity-value') as HTMLElement | null
+      gradientIntensitySlider?.addEventListener('input', () => {
+        const val = parseInt(gradientIntensitySlider.value)
+        if (gradientIntensityValue) gradientIntensityValue.textContent = val + '%'
+        setGradientIntensity(val)
       })
     })
   </script>
