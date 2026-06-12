@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout title="ProtoLand — Политика конфиденциальности" description="Политика конфиденциальности демо-шаблона ProtoLand.">
+  <div class="min-h-screen section-gradient" style="color: var(--text-primary)">
+    <div class="max-w-3xl mx-auto px-4 py-12">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-all duration-200 hover:text-[var(--accent)] hover:gap-3"
+        style="color: var(--text-secondary)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        На главную
+      </a>
+
+      <article class="prose prose-sm sm:prose max-w-none" style="color: var(--text-primary)">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-2">Политика конфиденциальности</h1>
+        <p class="text-sm mb-8" style="color: var(--text-secondary)">Последнее обновление: {new Date().toLocaleDateString('ru-RU')}</p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">1. Общие положения</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Настоящая Политика конфиденциальности регулирует порядок обработки и использования персональных данных
+          посетителей демо-шаблона ProtoLand (далее — «Сайт»). Используя Сайт, вы соглашаетесь с условиями
+          настоящей Политики.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">2. Какие данные мы собираем</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          ProtoLand — демонстрационный шаблон лендинга. Сайт не собирает, не хранит и не передаёт
+          персональные данные пользователей. Все формы обратной связи работают в демо-режиме: введённые
+          данные не отправляются и не сохраняются.
+        </p>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Единственная информация, которая может быть автоматически получена при посещении, —
+          технические данные (IP-адрес, тип браузера, версия ОС), которые обрабатываются
+          стандартными средствами хостинг-провайдера и не используются владельцем сайта.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">3. Файлы cookie</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Сайт может использовать файлы cookie исключительно для хранения настроек отображения
+          (выбранная тема, акцентный цвет, шрифт). Эти данные сохраняются локально в вашем браузере
+          и не передаются третьим лицам. Вы можете отключить сохранение cookie в настройках браузера.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">4. Передача данных третьим лицам</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Мы не передаём персональные данные пользователей третьим лицам, за исключением случаев,
+          предусмотренных законодательством Российской Федерации.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">5. Безопасность</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Мы принимаем организационные и технические меры для защиты информации пользователей.
+          Однако, поскольку Сайт является демонстрационным шаблоном, мы рекомендуем не вводить
+          реальные конфиденциальные данные в формы на данном сайте.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">6. Контакты</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          По вопросам, связанным с обработкой персональных данных, вы можете обратиться к разработчику:
+        </p>
+        <ul class="list-disc pl-5 mb-4 leading-relaxed" style="color: var(--text-secondary)">
+          <li>Telegram: <a href="https://t.me/horr1ble" class="text-[var(--accent)] hover:underline" target="_blank" rel="noopener noreferrer">@horr1ble</a></li>
+          <li>Сайт: <a href="https://horr1ble.space/" class="text-[var(--accent)] hover:underline" target="_blank" rel="noopener noreferrer">horr1ble.space</a></li>
+        </ul>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">7. Изменение Политики</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Мы оставляем за собой право вносить изменения в настоящую Политику конфиденциальности.
+          Актуальная версия всегда доступна на этой странице.
+        </p>
+      </article>
+    </div>
+  </div>
+</BaseLayout>

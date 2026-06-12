@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout title="ProtoLand — Условия использования" description="Условия использования демо-шаблона ProtoLand.">
+  <div class="min-h-screen section-gradient" style="color: var(--text-primary)">
+    <div class="max-w-3xl mx-auto px-4 py-12">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-all duration-200 hover:text-[var(--accent)] hover:gap-3"
+        style="color: var(--text-secondary)"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+        На главную
+      </a>
+
+      <article class="prose prose-sm sm:prose max-w-none" style="color: var(--text-primary)">
+        <h1 class="text-3xl sm:text-4xl font-bold mb-2">Условия использования</h1>
+        <p class="text-sm mb-8" style="color: var(--text-secondary)">Последнее обновление: {new Date().toLocaleDateString('ru-RU')}</p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">1. Статус сайта</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          ProtoLand — демонстрационный шаблон лендинга. Сайт предназначен исключительно для
+          ознакомления с функциональностью и дизайном. Все размещённые материалы, включая тексты,
+          изображения и тарифы, являются примерами и не представляют собой реальное коммерческое
+          предложение.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">2. Использование материалов</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Вы можете свободно просматривать и изучать Сайт. Любое копирование, воспроизведение,
+          распространение или иное использование материалов Сайта в коммерческих целях допускается
+          только с письменного разрешения разработчика.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">3. Демо-режим</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Форма обратной связи и другие интерактивные элементы работают в демо-режиме. Отправленные
+          через форму данные не обрабатываются и не сохраняются. Для заказа реального сайта
+          свяжитесь с разработчиком напрямую.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">4. Ограничение ответственности</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Сайт предоставляется «как есть» (as is). Разработчик не несёт ответственности за любые
+          убытки или ущерб, возникшие в результате использования данного демо-шаблона. Вы
+          используете Сайт на свой страх и риск.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">5. Интеллектуальная собственность</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Все права на дизайн, код и визуальные элементы Сайта принадлежат разработчику, если
+          не указано иное. Использование исходного кода шаблона регулируется отдельной лицензией
+          и допускается только после приобретения соответствующей лицензии у разработчика.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">6. Ссылки на сторонние ресурсы</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Сайт может содержать ссылки на сторонние ресурсы. Разработчик не несёт ответственности
+          за содержание и доступность этих ресурсов, а также за любые убытки, связанные с их
+          использованием.
+        </p>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">7. Контакты</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          По всем вопросам обращайтесь к разработчику:
+        </p>
+        <ul class="list-disc pl-5 mb-4 leading-relaxed" style="color: var(--text-secondary)">
+          <li>Telegram: <a href="https://t.me/horr1ble" class="text-[var(--accent)] hover:underline" target="_blank" rel="noopener noreferrer">@horr1ble</a></li>
+          <li>Сайт: <a href="https://horr1ble.space/" class="text-[var(--accent)] hover:underline" target="_blank" rel="noopener noreferrer">horr1ble.space</a></li>
+        </ul>
+
+        <h2 class="text-xl font-bold mt-8 mb-3">8. Изменение условий</h2>
+        <p class="leading-relaxed mb-4" style="color: var(--text-secondary)">
+          Разработчик оставляет за собой право изменять настоящие Условия использования без
+          предварительного уведомления. Актуальная версия всегда доступна на этой странице.
+        </p>
+      </article>
+    </div>
+  </div>
+</BaseLayout>
