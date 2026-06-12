@@ -2,11 +2,11 @@
 import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher.astro'
 
 const navLinks = [
-  { href: '#features', label: 'Возможности' },
-  { href: '#how-it-works', label: 'Как это работает' },
-  { href: '#examples', label: 'Примеры' },
-  { href: '#testimonials', label: 'Отзывы' },
-  { href: '#contact', label: 'Контакты' },
+  { href: '#features', label: 'Возможности', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' },
+  { href: '#how-it-works', label: 'Как это работает', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' },
+  { href: '#examples', label: 'Примеры', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>' },
+  { href: '#testimonials', label: 'Отзывы', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' },
+  { href: '#contact', label: 'Контакты', icon: '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' },
 ]
 ---
 
@@ -28,9 +28,10 @@ const navLinks = [
           navLinks.map((link) => (
             <a
               href={link.href}
-              class="relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5"
+              class="relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 flex items-center gap-1.5"
               style="color: var(--text-secondary)"
             >
+              <span set:html={link.icon} />
               {link.label}
             </a>
           ))
@@ -64,9 +65,10 @@ const navLinks = [
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 active:scale-[0.98]"
+            class="px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 active:scale-[0.98] flex items-center gap-2"
             style="color: var(--text-secondary)"
           >
+            <span set:html={link.icon} />
             {link.label}
           </a>
         ))
