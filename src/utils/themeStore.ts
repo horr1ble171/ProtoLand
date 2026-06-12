@@ -25,6 +25,7 @@ const ANIM_KEY = 'protoland-animations'
 const SHADOW_KEY = 'protoland-shadows'
 const SCROLLBAR_KEY = 'protoland-scrollbar'
 const RADIUS_KEY = 'protoland-radius'
+const SMOOTH_SCROLL_KEY = 'protoland-smooth-scroll'
 const GRADIENT_ENABLED_KEY = 'protoland-gradient-enabled'
 const GRADIENT_INTENSITY_KEY = 'protoland-gradient-intensity'
 const GRADIENT_FROM_KEY = 'protoland-gradient-from'
@@ -131,6 +132,20 @@ export function setScrollbar(enabled: boolean): void {
 
 export function getStoredRadius(): number {
   return getStoredValue<number>(RADIUS_KEY, 16)
+}
+
+export function getStoredSmoothScroll(): boolean {
+  return getStoredValue<string>(SMOOTH_SCROLL_KEY, 'true') === 'true'
+}
+
+export function setSmoothScroll(enabled: boolean): void {
+  setStoredValue(SMOOTH_SCROLL_KEY, enabled.toString())
+  const root = document.documentElement
+  if (enabled) {
+    root.removeAttribute('data-no-smooth-scroll')
+  } else {
+    root.setAttribute('data-no-smooth-scroll', '')
+  }
 }
 
 export function getStoredGradientEnabled(): boolean {
@@ -255,6 +270,7 @@ export function initTheme(): void {
   setShadows(getStoredShadows())
   setScrollbar(getStoredScrollbar())
   setRadius(getStoredRadius())
+  setSmoothScroll(getStoredSmoothScroll())
   applyGradient()
 }
 
@@ -336,6 +352,7 @@ export function resetSettings(): void {
   localStorage.removeItem(SHADOW_KEY)
   localStorage.removeItem(SCROLLBAR_KEY)
   localStorage.removeItem(RADIUS_KEY)
+  localStorage.removeItem(SMOOTH_SCROLL_KEY)
   localStorage.removeItem(GRADIENT_ENABLED_KEY)
   localStorage.removeItem(GRADIENT_INTENSITY_KEY)
   localStorage.removeItem(GRADIENT_FROM_KEY)
@@ -354,11 +371,12 @@ export function exportTheme(): string {
   const shadows = getStoredShadows()
   const scrollbar = getStoredScrollbar()
   const radius = getStoredRadius()
+  const smoothScroll = getStoredSmoothScroll()
   const gradientEnabled = getStoredGradientEnabled()
   const gradientIntensity = getStoredGradientIntensity()
   const gradientFrom = getStoredGradientFrom()
   const gradientTo = getStoredGradientTo()
-  return JSON.stringify({ theme, accent: color, font, fontWeight, customFont, animations, shadows, scrollbar, radius, gradientEnabled, gradientIntensity, gradientFrom, gradientTo }, null, 2)
+  return JSON.stringify({ theme, accent: color, font, fontWeight, customFont, animations, shadows, scrollbar, radius, smoothScroll, gradientEnabled, gradientIntensity, gradientFrom, gradientTo }, null, 2)
 }
 
 export function importTheme(json: string): boolean {
@@ -375,6 +393,7 @@ export function importTheme(json: string): boolean {
     const shadows = typeof data.shadows === 'boolean' ? data.shadows : true
     const scrollbar = typeof data.scrollbar === 'boolean' ? data.scrollbar : true
     const radius = typeof data.radius === 'number' ? data.radius : 16
+    const smoothScroll = typeof data.smoothScroll === 'boolean' ? data.smoothScroll : true
     const gradientEnabled = typeof data.gradientEnabled === 'boolean' ? data.gradientEnabled : false
     const gradientIntensity = typeof data.gradientIntensity === 'number' ? data.gradientIntensity : 70
     const gradientFrom = typeof data.gradientFrom === 'string' ? data.gradientFrom : ''
@@ -391,6 +410,7 @@ export function importTheme(json: string): boolean {
     setShadows(shadows)
     setScrollbar(scrollbar)
     setRadius(radius)
+    setSmoothScroll(smoothScroll)
     setGradientEnabled(gradientEnabled)
     setGradientIntensity(gradientIntensity)
     if (gradientFrom) setGradientFrom(gradientFrom)
