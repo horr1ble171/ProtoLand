@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import Header from '../components/common/Header.astro'
 
 const presetColors = [
   { value: 'red', label: 'Красный', light: '#e53935', dark: '#ff5252' },
@@ -17,16 +18,9 @@ const presetColors = [
 ---
 
 <BaseLayout title="ProtoLand — Настройка лендинга" description="Настройте внешний вид лендинга: выберите тему и акцентный цвет.">
-  <div class="min-h-screen section-gradient" style="color: var(--text-primary)">
+  <Header />
+  <div class="min-h-screen section-gradient pt-24 md:pt-28" style="color: var(--text-primary)">
     <div class="max-w-3xl mx-auto px-4 py-12">
-      <a
-        href="/"
-        class="inline-flex items-center gap-2 text-sm font-medium mb-8 transition-all duration-200 hover:text-[var(--accent)] hover:gap-3"
-        style="color: var(--text-secondary)"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
-        На главную
-      </a>
 
       <div class="flex items-start sm:items-center gap-3 sm:gap-4 mb-2">
         <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl flex items-center justify-center shrink-0 text-base sm:text-lg" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
