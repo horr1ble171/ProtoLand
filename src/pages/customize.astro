@@ -285,24 +285,6 @@ const presetColors = [
           </div>
         </div>
 
-        <!-- Smooth Scroll -->
-        <div class="rounded-2xl p-5 border card-shadow hover-lift" style="background-color: var(--bg-card); border-color: var(--border)">
-          <div class="flex items-center justify-between">
-            <div class="flex items-start gap-3">
-              <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style="background-color: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent)">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div>
-                <p class="font-semibold text-sm" style="color: var(--text-primary)">Плавный скролл</p>
-                <p class="text-xs mt-0.5" style="color: var(--text-secondary)">Плавная прокрутка по якорям</p>
-              </div>
-            </div>
-            <button id="smooth-scroll-toggle" class="relative w-12 h-6 rounded-full transition-colors duration-200 shrink-0" style="background-color: var(--accent)" role="switch" aria-checked="true">
-              <span id="smooth-scroll-knob" class="absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200" style="transform: translateX(24px)" />
-            </button>
-          </div>
-        </div>
-
         <!-- Gradient Text -->
         <div id="settings-text" class="rounded-2xl p-6 border card-shadow" style="background-color: var(--bg-card); border-color: var(--border)">
           <div class="flex items-center gap-3 mb-5">
@@ -474,7 +456,7 @@ const presetColors = [
   </div>
 
   <script>
-    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, getStoredFontWeight, getStoredCustomFont, getStoredGradientEnabled, getStoredGradientIntensity, getStoredGradientFrom, getStoredGradientTo, getStoredSmoothScroll, setTheme, setAccent, setFont, setFontWeight, setCustomFont, loadGoogleFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, setGradientEnabled, setGradientIntensity, setGradientFrom, setGradientTo, setSmoothScroll, applyGradient, darken, type Theme, type Font } from '../utils/themeStore'
+    import { initTheme, getStoredTheme, getStoredAccent, getStoredFont, getStoredAnimations, getStoredShadows, getStoredScrollbar, getStoredRadius, getStoredFontWeight, getStoredCustomFont, getStoredGradientEnabled, getStoredGradientIntensity, getStoredGradientFrom, getStoredGradientTo, setTheme, setAccent, setFont, setFontWeight, setCustomFont, loadGoogleFont, setAnimations, setShadows, setScrollbar, setRadius, resetSettings, getAccentColor, exportTheme, importTheme, setGradientEnabled, setGradientIntensity, setGradientFrom, setGradientTo, applyGradient, darken, type Theme, type Font } from '../utils/themeStore'
 
     function syncUI(): void {
       const theme = getStoredTheme()
@@ -554,16 +536,6 @@ const presetColors = [
         scrollbarToggle.style.backgroundColor = scrollbar ? 'var(--accent)' : 'var(--border)'
       }
       if (scrollbarKnob) scrollbarKnob.style.transform = scrollbar ? 'translateX(24px)' : 'translateX(0)'
-
-      const smoothScrollToggle = document.getElementById('smooth-scroll-toggle') as HTMLElement | null
-      const smoothScrollKnob = document.getElementById('smooth-scroll-knob') as HTMLElement | null
-      const smooth = getStoredSmoothScroll()
-      if (smoothScrollToggle) {
-        smoothScrollToggle.setAttribute('aria-checked', smooth.toString())
-        smoothScrollToggle.style.backgroundColor = smooth ? 'var(--accent)' : 'var(--border)'
-      }
-      if (smoothScrollKnob) smoothScrollKnob.style.transform = smooth ? 'translateX(24px)' : 'translateX(0)'
-
       const radius = getStoredRadius()
 
       const radiusBadge = document.getElementById('radius-badge')
@@ -782,17 +754,6 @@ const presetColors = [
         scrollbarToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
         if (scrollbarKnobEl) scrollbarKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
         setScrollbar(next)
-      })
-
-      const smoothScrollToggleEl = document.getElementById('smooth-scroll-toggle') as HTMLElement | null
-      const smoothScrollKnobEl = document.getElementById('smooth-scroll-knob') as HTMLElement | null
-      smoothScrollToggleEl?.addEventListener('click', () => {
-        const current = smoothScrollToggleEl.getAttribute('aria-checked') === 'true'
-        const next = !current
-        smoothScrollToggleEl.setAttribute('aria-checked', next.toString())
-        smoothScrollToggleEl.style.backgroundColor = next ? 'var(--accent)' : 'var(--border)'
-        if (smoothScrollKnobEl) smoothScrollKnobEl.style.transform = next ? 'translateX(24px)' : 'translateX(0)'
-        setSmoothScroll(next)
       })
 
       document.querySelectorAll('.radius-btn').forEach((btn) => {

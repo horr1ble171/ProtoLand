@@ -64,29 +64,6 @@ const imageUrl = new URL('/logo.png', Astro.site)
         )
 
         document.querySelectorAll('.observe-fade').forEach((el) => observer.observe(el))
-
-        let smoothVel = 0
-        let smoothActive = false
-
-        function smoothLoop() {
-          smoothVel *= 0.88
-          if (Math.abs(smoothVel) < 0.5) {
-            smoothActive = false
-            return
-          }
-          window.scrollBy(0, Math.round(smoothVel))
-          requestAnimationFrame(smoothLoop)
-        }
-
-        window.addEventListener('wheel', (e) => {
-          if (document.documentElement.hasAttribute('data-no-smooth-scroll')) return
-          e.preventDefault()
-          smoothVel += e.deltaY * 0.25
-          if (!smoothActive) {
-            smoothActive = true
-            requestAnimationFrame(smoothLoop)
-          }
-        }, { passive: false })
       })
     </script>
   </body>
