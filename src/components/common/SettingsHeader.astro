@@ -14,20 +14,20 @@ const navLinks = [
   style="background-color: var(--header-bg); border-color: var(--border)"
 >
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-14 md:h-16">
-      <a href="/" class="flex items-center gap-2.5 group shrink-0">
+    <div class="flex items-center justify-between h-16 md:h-20">
+      <a href="/" class="flex items-center gap-3 group shrink-0">
         <div class="relative">
-          <img src="/logo.png" alt="ProtoLand" class="h-8 md:h-9 w-auto rounded-lg border-2 transition-all duration-300 group-hover:border-[var(--accent)]" style="border-color: var(--border)" />
+          <img src="/logo.png" alt="ProtoLand" class="h-10 md:h-11 w-auto rounded-xl border-2 transition-all duration-300 group-hover:border-[var(--accent)]" style="border-color: var(--border)" />
         </div>
-        <span class="text-base font-bold tracking-tight hidden sm:inline transition-colors duration-200 group-hover:text-[var(--accent)]" style="color: var(--text-primary)">ProtoLand</span>
+        <span class="text-lg font-bold tracking-tight hidden sm:inline transition-colors duration-200 group-hover:text-[var(--accent)]" style="color: var(--text-primary)">ProtoLand</span>
       </a>
 
-      <nav class="hidden md:flex items-center gap-0.5">
+      <nav class="hidden md:flex items-center gap-1">
         {
           navLinks.map((link) => (
             <a
               href={link.href}
-              class="relative px-3 py-1.5 text-xs font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 flex items-center gap-1.5 whitespace-nowrap"
+              class="relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 flex items-center gap-1.5 whitespace-nowrap"
               style="color: var(--text-secondary)"
             >
               <span set:html={link.icon} />
@@ -38,27 +38,28 @@ const navLinks = [
       </nav>
 
       <div class="flex items-center gap-2">
-        <button
-          id="settings-theme-toggle"
-          class="w-8 h-8 flex items-center justify-center rounded-lg transition-all duration-200 border hover:border-[var(--accent)] hover:bg-[var(--accent)]/5"
+        <a
+          href="/"
+          class="w-9 h-9 flex items-center justify-center rounded-xl transition-all duration-200 border hover:border-[var(--accent)] hover:bg-[var(--accent)]/5 group"
           style="background-color: var(--bg-card); border-color: var(--border); color: var(--text-secondary)"
-          aria-label="Переключить тему"
-          title="Переключить тему"
+          aria-label="На главную"
+          title="На главную"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="settings-theme-icon">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform duration-200 group-hover:-translate-x-0.5">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9 22 9 12 15 12 15 22"/>
           </svg>
-        </button>
+        </a>
         <button
           id="settings-menu-btn"
-          class="md:hidden w-8 h-8 relative flex items-center justify-center rounded-lg transition-all duration-200 border hover:border-[var(--accent)]"
+          class="md:hidden w-9 h-9 relative flex items-center justify-center rounded-lg transition-all duration-200 border hover:border-[var(--accent)]"
           style="background-color: var(--bg-card); border-color: var(--border); color: var(--text-secondary)"
           aria-label="Меню"
           aria-expanded="false"
         >
-          <span class="absolute w-3.5 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(-3.5px)" id="settings-menu-line-1"></span>
-          <span class="absolute w-3.5 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor" id="settings-menu-line-2"></span>
-          <span class="absolute w-3.5 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(3.5px)" id="settings-menu-line-3"></span>
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(-4px)" id="settings-menu-line-1"></span>
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor" id="settings-menu-line-2"></span>
+          <span class="absolute w-4 h-0.5 rounded-full transition-all duration-300" style="background-color: currentColor; transform: translateY(4px)" id="settings-menu-line-3"></span>
         </button>
       </div>
     </div>
@@ -69,12 +70,12 @@ const navLinks = [
     class="md:hidden overflow-hidden transition-all duration-300 max-h-0 border-t"
     style="background-color: var(--bg-card); border-color: var(--border)"
   >
-    <nav class="flex flex-col gap-0.5 px-4 py-3">
+    <nav class="flex flex-col gap-1 px-4 py-3">
       {
         navLinks.map((link) => (
           <a
             href={link.href}
-            class="px-4 py-2.5 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 active:scale-[0.98] flex items-center gap-2"
+            class="px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:text-[var(--accent)] hover:bg-[var(--accent)]/5 active:scale-[0.98] flex items-center gap-2"
             style="color: var(--text-secondary)"
           >
             <span set:html={link.icon} />
@@ -87,8 +88,6 @@ const navLinks = [
 </header>
 
 <script>
-  import { toggleTheme, getStoredTheme } from '../../utils/themeStore'
-
   const menuBtn = document.getElementById('settings-menu-btn')
   const mobileMenu = document.getElementById('settings-mobile-menu')
   const line1 = document.getElementById('settings-menu-line-1')
@@ -109,10 +108,10 @@ const navLinks = [
     mobileMenu?.classList.remove('max-h-80')
     mobileMenu?.classList.add('max-h-0')
     menuBtn?.setAttribute('aria-expanded', 'false')
-    if (line1) line1.style.transform = 'translateY(-3.5px) rotate(0deg)'
+    if (line1) line1.style.transform = 'translateY(-4px) rotate(0deg)'
     if (line2) line2.style.opacity = '1'
     if (line2) line2.style.transform = 'scaleX(1)'
-    if (line3) line3.style.transform = 'translateY(3.5px) rotate(0deg)'
+    if (line3) line3.style.transform = 'translateY(4px) rotate(0deg)'
   }
 
   menuBtn?.addEventListener('click', () => {
@@ -131,17 +130,4 @@ const navLinks = [
       closeMenu()
     }
   })
-
-  const themeToggle = document.getElementById('settings-theme-toggle')
-  const themeIcon = document.getElementById('settings-theme-icon')
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const next = toggleTheme()
-      if (themeIcon) {
-        themeIcon.innerHTML = next === 'dark'
-          ? '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>'
-          : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>'
-      }
-    })
-  }
 </script>
